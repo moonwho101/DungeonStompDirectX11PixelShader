@@ -30,7 +30,7 @@ void UpdateEffects(IDirect3DDevice9* pd3dDevice);
 void DrawBoundingBox(IDirect3DDevice9* pd3dDevice);
 void ShowScreenOverlays(IDirect3DDevice9* pd3dDevice);
 void ProcessLights();
-void SetDiceTexture();
+void SetDiceTexture(bool showroll);
 void DisplayPlayerCaption(IDirect3DDevice9* pd3dDevice);
 void statusbardisplay(float x, float length, int type);
 
@@ -199,7 +199,7 @@ void DrawScene(IDirect3DDevice9* pd3dDevice) {
 	char junk[255];
 
 	ScanMod();
-	SetDiceTexture();
+	SetDiceTexture(false);
 
 
 

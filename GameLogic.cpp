@@ -52,6 +52,9 @@ float fDot2 = 0;
 
 int damageinprogress = 0;
 
+int d20roll = 20;
+int damageroll = 4;
+
 D3DXVECTOR3 eRadius = D3DXVECTOR3(25.0f, 50.0f, 25.0f);
 SCROLLLISTING scrolllist1[50];
 int slistcounter = 0;
@@ -1981,10 +1984,12 @@ void MonsterHit()
 		dice[0].roll = 0;
 		sprintf_s(dice[0].name, "%ss%d", dice[0].prefix, action);
 
+		
 
 		if (!hitmonster) {
 			dice[1].roll = 0;
 			sprintf_s(dice[1].name, "dieblank");
+			d20roll = action;
 		}
 	}
 
@@ -2094,7 +2099,7 @@ void MonsterHit()
 				dice[0].roll = 0;
 				sprintf_s(dice[0].name, "%ss%d", dice[0].prefix, action);
 
-
+				d20roll = action;
 
 				int a;
 
@@ -2119,6 +2124,8 @@ void MonsterHit()
 					monster_list[i].takedamageonce = 1;
 
 					action = random_num(weapondamage) + 1;
+
+					damageroll = action;
 
 					int painaction = random_num(3);
 					SetMonsterAnimationSequence(i, 3 + painaction);

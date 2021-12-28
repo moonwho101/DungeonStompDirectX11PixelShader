@@ -26,7 +26,9 @@
 #include "Missle.hpp"
 
 void DisplayHud();
-void SetDiceTexture();
+void SetDiceTexture(bool showroll);
+
+
 
 
 ID3D11ShaderResourceView* save_out_srv = NULL;
@@ -98,6 +100,10 @@ CDXUTTextHelper* g_pTxtHelper = NULL;
 CDXUTDialog                 g_HUD;                  // dialog for standard controls
 CDXUTDialog                 g_SampleUI;             // dialog for sample specific controls
 
+
+CDXUTDialog                 g_HUDStats;                  // dialog for standard controls
+
+
 // Direct3D 9 resources
 extern ID3DXFont* g_pFont9;
 extern ID3DXSprite* g_pSprite9;
@@ -148,6 +154,7 @@ extern char gActionMessage[2048];
 #define IDC_TOGGLEFULLSCREEN    1
 #define IDC_TOGGLEREF           2
 #define IDC_CHANGEDEVICE        3
+#define IDC_TEST        4
 
 
 //--------------------------------------------------------------------------------------
@@ -253,7 +260,13 @@ void InitApp()
 {
     g_SettingsDlg.Init(&g_DialogResourceManager);
     g_HUD.Init(&g_DialogResourceManager);
+
+    g_HUDStats.Init(&g_DialogResourceManager);
+
     g_SampleUI.Init(&g_DialogResourceManager);
+
+    
+
 
     g_HUD.SetCallback(OnGUIEvent);
     int iY = 30;
@@ -263,6 +276,22 @@ void InitApp()
     g_HUD.AddButton(IDC_CHANGEDEVICE, L"Change device (F2)", 0, iY += iYo, 170, 22, VK_F2);
 
     g_SampleUI.SetCallback(OnGUIEvent); iY = 10;
+
+
+    g_HUDStats.SetCallback(OnGUIEvent);
+    iY = 0;
+    iYo = 26;
+    g_HUDStats.AddButton(IDC_TEST, L"", 0, 80.0f, 250, 250);
+
+    CDXUTButton* button = g_HUDStats.GetButton(IDC_TEST);
+    CDXUTElement* elem = button->GetElement(0);  // ..or perhaps GetElement(0)
+    //elem->SetTexture(0,
+
+
+    //g_HUDStats.SetTexture()
+
+    
+
 }
 
 
@@ -476,6 +505,14 @@ HRESULT CALLBACK OnD3D11ResizedSwapChain(ID3D11Device* pd3dDevice, IDXGISwapChai
 
     g_HUD.SetLocation(pBackBufferSurfaceDesc->Width - 170, 0);
     g_HUD.SetSize(170, 170);
+
+
+    //g_HUDStats.SetLocation(pBackBufferSurfaceDesc->Width - 190, 0);
+    g_HUDStats.SetLocation(-60, wHeight - 290.0f);
+    g_HUDStats.SetSize(290, 160);
+
+    //g_HUDStats.SetTexture(1, charToWChar("D:\\GitHub\\DungeonStomp9\\UI\\box2.dds"));
+
     g_SampleUI.SetLocation(pBackBufferSurfaceDesc->Width - 170, pBackBufferSurfaceDesc->Height - 300);
     g_SampleUI.SetSize(170, 300);
 
@@ -630,11 +667,13 @@ void CALLBACK OnD3D11FrameRender(ID3D11Device* pd3dDevice, ID3D11DeviceContext* 
 
     DXUT_BeginPerfEvent(DXUT_PERFEVENTCOLOR, L"HUD / Stats");
     g_HUD.OnRender(fElapsedTime);
+    g_HUDStats.OnRender(fElapsedTime);
+
     g_SampleUI.OnRender(fElapsedTime);
     RenderText();
     DisplayHud();
     ScanMod();
-    SetDiceTexture();
+    SetDiceTexture(true);
     DXUT_EndPerfEvent();
 
     static DWORD dwTimefirst = GetTickCount();
@@ -725,8 +764,8 @@ void DrawScene(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateConte
     blendStateDesc.AlphaToCoverageEnable = FALSE;
     blendStateDesc.IndependentBlendEnable = FALSE;
     blendStateDesc.RenderTarget[0].BlendEnable = TRUE;
-    blendStateDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_COLOR;
-    blendStateDesc.RenderTarget[0].DestBlend = D3D11_BLEND_BLEND_FACTOR;
+    blendStateDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_ONE;
+    blendStateDesc.RenderTarget[0].DestBlend = D3D11_BLEND_ONE;
     blendStateDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
     blendStateDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
     blendStateDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;

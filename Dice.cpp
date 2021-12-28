@@ -27,6 +27,8 @@ extern LPDIRECT3DTEXTURE9      g_pTextureList[MAX_NUM_TEXTURESLIST];
 D3DVERTEX MakeVertex(float x, float y, float z);
 void SetMaterialBright(IDirect3DDevice9* pd3dDevice);
 int showsavingthrow = 0;
+extern int d20roll;
+extern int damageroll;
 
 D3DVERTEX MakeVertex(float x, float y, float z) {
 
@@ -262,7 +264,7 @@ extern int savefailed;
 extern int criticalhiton;
 int spellhiton = 0;
 
-void SetDiceTexture()
+void SetDiceTexture(bool showroll)
 {
 	for (int i = 0; i < numdice; i++)
 	{
@@ -282,6 +284,9 @@ void SetDiceTexture()
 		}
 	}
 
+
+
+	
 	char junk[255];
 
 	if (usespell == 1)
@@ -367,6 +372,19 @@ void SetDiceTexture()
 			display_message((wWidth / 2) - 30.0f, wHeight - 130.0f, junk, 0, 255, 0, 12.5, 16, 0);
 		}
 	}
+
+
+	if (showroll) {
+		sprintf_s(junk, "%d", d20roll);
+		display_message((wWidth / 2) - 15.0f, wHeight - 60.0f, junk, 0, 255, 0, 12.5, 16, 0);
+
+		sprintf_s(junk, "%d", damageroll);
+		display_message((wWidth / 2) + 70.0f, wHeight - 60.0f, junk, 0, 255, 0, 12.5, 16, 0);
+	}
+
+
+
+
 }
 
 int thaco(int ac, int thaco)
