@@ -502,6 +502,9 @@ void CALLBACK OnD3D11FrameRender(ID3D11Device* pd3dDevice, ID3D11DeviceContext* 
     //D3DXVECTOR3 vecEye(0.0f, 0.0f, -5.0f);
     //D3DXVECTOR3 vecAt(0.0f, 0.0f, -0.0f);
 
+    if (maingameloop) {
+        CheckMidiMusic();
+    }
 
     float adjust = 50.0f;
 
