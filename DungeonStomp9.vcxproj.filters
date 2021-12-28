@@ -1,0 +1,175 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="DXUT">
+      <UniqueIdentifier>{4c0ed3e6-8a65-4a3b-94d4-96c3ac512a8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{5c9eec26-ddf2-4a9c-837c-2cae86a571b4}</UniqueIdentifier>
+      <Extensions>fx;fxh;hlsl</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{83fd9255-56fb-48d6-a190-3b53643852ea}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include=".\DXUT11\Optional\directx.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resource.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadWorld.hpp" />
+    <ClInclude Include="World.hpp" />
+    <ClInclude Include="GlobalSettings.hpp" />
+    <ClInclude Include="ImportMD2.hpp" />
+    <ClInclude Include="Import3DS.hpp" />
+    <ClInclude Include="ProcessModel.hpp" />
+    <ClInclude Include="DIrectInput.hpp" />
+    <ClInclude Include="GameLogic.hpp" />
+    <ClInclude Include="Collision.hpp" />
+    <ClInclude Include="col_local.h" />
+    <ClInclude Include="col_global.h" />
+    <ClInclude Include="d3dutil.h" />
+    <ClInclude Include="WAVFileReader.h" />
+    <ClInclude Include="XAudio2Versions.h" />
+    <ClInclude Include="Missle.hpp" />
+    <ClInclude Include="Render9.hpp" />
+    <ClInclude Include="FrameMove.hpp" />
+    <ClInclude Include="Dice.hpp" />
+    <ClInclude Include=".\DXUT11\Core\DXUT.h">
+      <Filter>DXUT</Filter>
+    </ClInclude>
+    <ClInclude Include=".\DXUT11\Optional\DXUTcamera.h">
+      <Filter>DXUT</Filter>
+    </ClInclude>
+    <ClInclude Include=".\DXUT11\Core\DXUTDevice9.h">
+      <Filter>DXUT</Filter>
+    </ClInclude>
+    <ClInclude Include=".\DXUT11\Core\DXUTDevice11.h">
+      <Filter>DXUT</Filter>
+    </ClInclude>
+    <ClInclude Include=".\DXUT11\Optional\DXUTgui.h">
+      <Filter>DXUT</Filter>
+    </ClInclude>
+    <ClInclude Include=".\DXUT11\Core\DXUTmisc.h">
+      <Filter>DXUT</Filter>
+    </ClInclude>
+    <ClInclude Include=".\DXUT11\Optional\DXUTres.h">
+      <Filter>DXUT</Filter>
+    </ClInclude>
+    <ClInclude Include=".\DXUT11\Optional\DXUTsettingsdlg.h">
+      <Filter>DXUT</Filter>
+    </ClInclude>
+    <ClInclude Include=".\DXUT11\Optional\SDKmesh.h">
+      <Filter>DXUT</Filter>
+    </ClInclude>
+    <ClInclude Include=".\DXUT11\Optional\SDKmisc.h">
+      <Filter>DXUT</Filter>
+    </ClInclude>
+    <ClInclude Include="LightHelper.h" />
+    <ClInclude Include="MathHelper.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="SimpleSample11.cpp" />
+    <ClCompile Include="SimpleSample9.cpp" />
+    <ClCompile Include="LoadWorld.cpp" />
+    <ClCompile Include="ProcessModel.cpp" />
+    <ClCompile Include="ImportMD2.cpp" />
+    <ClCompile Include="Import3DS.cpp" />
+    <ClCompile Include="DirectInput.cpp" />
+    <ClCompile Include="World.cpp" />
+    <ClCompile Include="GameLogic.cpp" />
+    <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="col_response.cpp" />
+    <ClCompile Include="col_step.cpp" />
+    <ClCompile Include="col_types.cpp" />
+    <ClCompile Include="WAVFileReader.cpp" />
+    <ClCompile Include="XAudio2BasicSound.cpp" />
+    <ClCompile Include="Missle.cpp" />
+    <ClCompile Include="Render9.cpp" />
+    <ClCompile Include="FrameMove.cpp" />
+    <ClCompile Include="Dice.cpp" />
+    <ClCompile Include=".\DXUT11\Core\DXUT.cpp">
+      <Filter>DXUT</Filter>
+    </ClCompile>
+    <ClCompile Include=".\DXUT11\Optional\DXUTcamera.cpp">
+      <Filter>DXUT</Filter>
+    </ClCompile>
+    <ClCompile Include=".\DXUT11\Core\DXUTDevice9.cpp">
+      <Filter>DXUT</Filter>
+    </ClCompile>
+    <ClCompile Include=".\DXUT11\Core\DXUTDevice11.cpp">
+      <Filter>DXUT</Filter>
+    </ClCompile>
+    <ClCompile Include=".\DXUT11\Optional\DXUTgui.cpp">
+      <Filter>DXUT</Filter>
+    </ClCompile>
+    <ClCompile Include=".\DXUT11\Core\DXUTmisc.cpp">
+      <Filter>DXUT</Filter>
+    </ClCompile>
+    <ClCompile Include=".\DXUT11\Optional\DXUTres.cpp">
+      <Filter>DXUT</Filter>
+    </ClCompile>
+    <ClCompile Include=".\DXUT11\Optional\DXUTsettingsdlg.cpp">
+      <Filter>DXUT</Filter>
+    </ClCompile>
+    <ClCompile Include=".\DXUT11\Optional\SDKmesh.cpp">
+      <Filter>DXUT</Filter>
+    </ClCompile>
+    <ClCompile Include=".\DXUT11\Optional\SDKmisc.cpp">
+      <Filter>DXUT</Filter>
+    </ClCompile>
+    <ClCompile Include="LightHelper.cpp" />
+    <ClCompile Include="MathHelper.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="SimpleSample.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="SimpleSample.fx">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Content\Shaders\ambient.fx">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Content\Shaders\blinn_phong_sm20.fx">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Content\Shaders\blinn_phong_sm30.fx">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Content\Shaders\nlight_sm30.fx">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Content\Shaders\LightHelper.fx">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Content\Shaders\Lighting.fx">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Content\Shaders\Default.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Content\Shaders\LightingUtil.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Torch.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Manifest Include=".\DXUT11\Core\dpiaware.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="SimpleSample.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>
