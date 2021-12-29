@@ -26,6 +26,8 @@
 #include "Missle.hpp"
 #include "d3dutil.h"
 
+
+int totalcount = 0;
 void DisplayHud();
 void SetDiceTexture(bool showroll);
 void display_font(float x, float y, char text[1000], int r, int g, int b);
@@ -665,7 +667,7 @@ void CALLBACK OnD3D11FrameRender(ID3D11Device* pd3dDevice, ID3D11DeviceContext* 
     DisplayPlayerCaption2(pd3dDevice);
 
     pd3dImmediateContext->Map(g_pcbCaptionBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &resource);
-    s = sizeof(Vertex) * countdisplay;
+    s = sizeof(Vertex) * totalcount;
     memcpy(resource.pData, mCaption, s);
     pd3dImmediateContext->Unmap(g_pcbCaptionBuffer, 0);
 
@@ -696,7 +698,7 @@ void CALLBACK OnD3D11FrameRender(ID3D11Device* pd3dDevice, ID3D11DeviceContext* 
     pd3dImmediateContext->IASetVertexBuffers(0, 1, &g_pcbCaptionBuffer, &stride, &offset);
 
     pd3dImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-    pd3dImmediateContext->Draw(countdisplay, 0);
+    pd3dImmediateContext->Draw(totalcount, 0);
 
 
     DXUT_BeginPerfEvent(DXUT_PERFEVENTCOLOR, L"HUD / Stats");
@@ -1653,6 +1655,9 @@ void DisplayPlayerCaption2(ID3D11Device* pd3dDevice) {
     //D3DVIEWPORT7 vp;
     //m_pd3dDevice->GetViewport(&vp);
 
+    
+    totalcount = 0;
+
     for (j = 0; j < num_monsters; j++)
     {
 
@@ -1670,10 +1675,12 @@ void DisplayPlayerCaption2(ID3D11Device* pd3dDevice) {
         num = 0;
         count = 0;
         yadjust = 0.0f;
+        
+        
 
         if (monster_list[j].bIsPlayerValid && cullflag == 1 && monster_list[j].bStopAnimating == FALSE)
         {
-
+            
             len = strlen(monster_list[j].chatstr);
 
             if (len > 0)
@@ -1714,25 +1721,25 @@ void DisplayPlayerCaption2(ID3D11Device* pd3dDevice) {
                 D3DXMatrixMultiply(&matWorld, &matRotate, &matWorld);
 
                 //pd3dDevice->SetTransform(D3DTS_WORLD, &matWorld);
-
+                //countdisplay = countdisplay;
                 //g_pVB->Lock(0, sizeof(&pMonsterCaption), (void**)&pMonsterCaption, 0);
                 for (i = 0; i < ((countdisplay)); i += 1)
                 {
                     D3DXVECTOR3 a = D3DXVECTOR3(bubble[i].x +x , bubble[i].y +y, bubble[i].z+z);
-                    mCaption[i].position = a;
+                    mCaption[totalcount].position = a;
                     //mCaption[i].color = D3DCOLOR_RGBA(105, 105, 105, 0); //0xffffffff;
-                    mCaption[i].tu = bubble[i].tu;
-                    mCaption[i].tv = bubble[i].tv;
+                    mCaption[totalcount].tu = bubble[i].tu;
+                    mCaption[totalcount].tv = bubble[i].tv;
+
+                    totalcount++;
                 }
-
-
-
+                //flag = 0;
                 //g_pVB->Unlock();
-
-                for (int i = 0; i < countdisplay; i = i + 4)
-                {
+                //totalcount = totalcount - 1;
+                //for (int i = 0; i < countdisplay; i = i + 4)
+                //{
                     //pd3dDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, i, 2);
-                }
+                //}
             }
         }
 
