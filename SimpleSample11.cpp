@@ -1675,7 +1675,7 @@ void DisplayPlayerCaption2(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dIm
         if (monster_list[j].bIsPlayerValid && cullflag == 1 && monster_list[j].bStopAnimating == FALSE)
         {
          
-            //strcpy(monster_list[j].chatstr, "1234567890ABCDEFGHIJ");
+            
             len = strlen(monster_list[j].chatstr);
 
 
