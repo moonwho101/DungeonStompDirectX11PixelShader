@@ -32,7 +32,7 @@ void DisplayHud();
 void SetDiceTexture(bool showroll);
 void display_font(float x, float y, char text[1000], int r, int g, int b);
 
-void DisplayPlayerCaption2(ID3D11Device* pd3dDevice);
+void DisplayPlayerCaption2(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateContext);
 
 extern int countdisplay;
 extern D3DVERTEX bubble[600];
@@ -664,12 +664,8 @@ void CALLBACK OnD3D11FrameRender(ID3D11Device* pd3dDevice, ID3D11DeviceContext* 
     pd3dImmediateContext->PSSetConstantBuffers(1, 1, &g_pcbVSPerFrame11);
 
 
-    DisplayPlayerCaption2(pd3dDevice);
+    
 
-    pd3dImmediateContext->Map(g_pcbCaptionBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &resource);
-    s = sizeof(Vertex) * totalcount;
-    memcpy(resource.pData, mCaption, s);
-    pd3dImmediateContext->Unmap(g_pcbCaptionBuffer, 0);
 
     // Set render resources
     pd3dImmediateContext->IASetInputLayout(g_pLayout11);
@@ -695,10 +691,8 @@ void CALLBACK OnD3D11FrameRender(ID3D11Device* pd3dDevice, ID3D11DeviceContext* 
     int t = FindTextureAlias("fontA");
     pd3dImmediateContext->PSSetShaderResources(0, 1, &textures[t]);
 
-    pd3dImmediateContext->IASetVertexBuffers(0, 1, &g_pcbCaptionBuffer, &stride, &offset);
-
-    pd3dImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-    pd3dImmediateContext->Draw(totalcount, 0);
+    DisplayPlayerCaption2(pd3dDevice, pd3dImmediateContext);
+   
 
 
     DXUT_BeginPerfEvent(DXUT_PERFEVENTCOLOR, L"HUD / Stats");
@@ -1596,7 +1590,7 @@ void ProcessLights11()
 
 
 
-void DisplayPlayerCaption2(ID3D11Device* pd3dDevice) {
+void DisplayPlayerCaption2(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateContext) {
 
     int i;
     //LPDIRECTDRAWSURFACE7 lpDDsurface;
@@ -1726,10 +1720,10 @@ void DisplayPlayerCaption2(ID3D11Device* pd3dDevice) {
                 for (i = 0; i < ((countdisplay)); i += 1)
                 {
                     D3DXVECTOR3 a = D3DXVECTOR3(bubble[i].x +x , bubble[i].y +y, bubble[i].z+z);
-                    mCaption[totalcount].position = a;
+                    mCaption[i].position = a;
                     //mCaption[i].color = D3DCOLOR_RGBA(105, 105, 105, 0); //0xffffffff;
-                    mCaption[totalcount].tu = bubble[i].tu;
-                    mCaption[totalcount].tv = bubble[i].tv;
+                    mCaption[i].tu = bubble[i].tu;
+                    mCaption[i].tv = bubble[i].tv;
 
                     totalcount++;
                 }
@@ -1740,6 +1734,18 @@ void DisplayPlayerCaption2(ID3D11Device* pd3dDevice) {
                 //{
                     //pd3dDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, i, 2);
                 //}
+
+                D3D11_MAPPED_SUBRESOURCE resource;
+                pd3dImmediateContext->Map(g_pcbCaptionBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &resource);
+                int s = sizeof(Vertex) * countdisplay;
+                memcpy(resource.pData, mCaption, s);
+                pd3dImmediateContext->Unmap(g_pcbCaptionBuffer, 0);
+
+                UINT stride = sizeof(Vertex);
+                UINT offset = 0;
+                pd3dImmediateContext->IASetVertexBuffers(0, 1, &g_pcbCaptionBuffer, &stride, &offset);
+                pd3dImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+                pd3dImmediateContext->Draw(countdisplay, 0);
             }
         }
 
