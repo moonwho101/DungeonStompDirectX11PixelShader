@@ -24,12 +24,16 @@
 #include <DirectXMath.h>
 #include "MathHelper.h"
 #include "Missle.hpp"
+#include "d3dutil.h"
 
 void DisplayHud();
 void SetDiceTexture(bool showroll);
+void display_font(float x, float y, char text[1000], int r, int g, int b);
 
+void DisplayPlayerCaption2(ID3D11Device* pd3dDevice);
 
-
+extern int countdisplay;
+extern D3DVERTEX bubble[600];
 
 ID3D11ShaderResourceView* save_out_srv = NULL;
 extern int number_of_tex_aliases;
@@ -55,6 +59,8 @@ typedef struct Vertex {
     //FLOAT x, y, z; D3DXCOLOR Color;
 
 };
+
+Vertex mCaption[5000];
 
 #define MAX_DX11_VERT 50000
 
@@ -86,6 +92,9 @@ struct PassConstants
 //PassConstants mMainPassCB;
 
 Light mMainPassCB[MaxLights];
+
+
+
 
 //#define DEBUG_VS   // Uncomment this line to debug D3D9 vertex shaders 
 //#define DEBUG_PS   // Uncomment this line to debug D3D9 pixel shaders 
@@ -141,6 +150,7 @@ ID3D11Buffer* g_pcbVSPerObject11 = NULL;
 ID3D11Buffer* g_pcbVSPerFrame11 = NULL;
 ID3D11Buffer* g_pcbVSLight11 = NULL;
 ID3D11Buffer* g_pcbBuffer = NULL;
+ID3D11Buffer* g_pcbCaptionBuffer = NULL;
 
 HRESULT FrameMove(double fTime, FLOAT fTimeKey);
 VOID UpdateControls();
@@ -470,7 +480,17 @@ HRESULT CALLBACK OnD3D11CreateDevice(ID3D11Device* pd3dDevice, const DXGI_SURFAC
     V_RETURN(pd3dDevice->CreateBuffer(&cbDesc, NULL, &g_pcbBuffer));
     DXUT_SetDebugName(g_pcbBuffer, "CB_VS_PER_FRAME");
 
-    
+
+    ZeroMemory(&cbDesc, sizeof(cbDesc));
+    cbDesc.Usage = D3D11_USAGE_DYNAMIC;
+    cbDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+    cbDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+    cbDesc.ByteWidth = sizeof(Vertex) * 5000;
+    V_RETURN(pd3dDevice->CreateBuffer(&cbDesc, NULL, &g_pcbCaptionBuffer));
+    DXUT_SetDebugName(g_pcbCaptionBuffer, "CB_CAPTION_PER_FRAME");
+
+
+
     // Setup the camera's view parameters
     D3DXVECTOR3 vecEye(0.0f, 0.0f, -5.0f);
     D3DXVECTOR3 vecAt(0.0f, 0.0f, -0.0f);
@@ -642,7 +662,12 @@ void CALLBACK OnD3D11FrameRender(ID3D11Device* pd3dDevice, ID3D11DeviceContext* 
     pd3dImmediateContext->PSSetConstantBuffers(1, 1, &g_pcbVSPerFrame11);
 
 
+    DisplayPlayerCaption2(pd3dDevice);
 
+    pd3dImmediateContext->Map(g_pcbCaptionBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &resource);
+    s = sizeof(Vertex) * countdisplay;
+    memcpy(resource.pData, mCaption, s);
+    pd3dImmediateContext->Unmap(g_pcbCaptionBuffer, 0);
 
     // Set render resources
     pd3dImmediateContext->IASetInputLayout(g_pLayout11);
@@ -664,6 +689,15 @@ void CALLBACK OnD3D11FrameRender(ID3D11Device* pd3dDevice, ID3D11DeviceContext* 
 
     //pd3dImmediateContext->Draw(100*3, 0);
     //pd3dImmediateContext->DrawIndexed(936, 0, 0);
+    
+    int t = FindTextureAlias("fontA");
+    pd3dImmediateContext->PSSetShaderResources(0, 1, &textures[t]);
+
+    pd3dImmediateContext->IASetVertexBuffers(0, 1, &g_pcbCaptionBuffer, &stride, &offset);
+
+    pd3dImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+    pd3dImmediateContext->Draw(countdisplay, 0);
+
 
     DXUT_BeginPerfEvent(DXUT_PERFEVENTCOLOR, L"HUD / Stats");
     g_HUD.OnRender(fElapsedTime);
@@ -674,6 +708,12 @@ void CALLBACK OnD3D11FrameRender(ID3D11Device* pd3dDevice, ID3D11DeviceContext* 
     DisplayHud();
     ScanMod();
     SetDiceTexture(true);
+
+
+    
+
+
+
     DXUT_EndPerfEvent();
 
     static DWORD dwTimefirst = GetTickCount();
@@ -901,6 +941,7 @@ void CALLBACK OnD3D11DestroyDevice(void* pUserContext)
     SAFE_RELEASE(g_pcbVSPerObject11);
     SAFE_RELEASE(g_pcbVSPerFrame11);
     SAFE_RELEASE(g_pcbBuffer);
+    SAFE_RELEASE(g_pcbCaptionBuffer);
 
     SAFE_RELEASE(save_out_srv);
 
@@ -1550,3 +1591,152 @@ void ProcessLights11()
     }
 }
 
+
+
+
+void DisplayPlayerCaption2(ID3D11Device* pd3dDevice) {
+
+    int i;
+    //LPDIRECTDRAWSURFACE7 lpDDsurface;
+    float x, y, z;
+
+    float pangle = 0;
+
+    int countit = 0;
+    int cullloop = 0;
+    int cullflag = 0;
+    int num = 0;
+    int len = 0;
+    int count = 0;
+    char junk2[2000];
+    int flag = 1;
+    float yadjust = 0;
+
+    D3DXMATRIX matWorld, matProj;
+
+    //if (showtexture == 0)
+        //return;
+
+    D3DXMATRIX matRotate;
+    int j = 0;
+
+    //if (menuflares == 1)
+    //{
+    //	if (lastmaterial == 0)
+    //	{
+    //		D3DMATERIAL7 mtrl;
+    //		D3DUtil_InitMaterial(mtrl, 1.0f, 1.0f, 1.0f, 1.0f);
+    //		mtrl.emissive.r = 1.0f;
+    //		mtrl.emissive.g = 1.0f;
+    //		mtrl.emissive.b = 1.0f;
+    //		lastmaterial = 1;
+    //		m_pd3dDevice->SetMaterial(&mtrl);
+    //	}
+    //}
+
+    //pd3dDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+    //pd3dDevice->SetRenderState(D3DRS_ALPHAREF, 0x01);
+    //pd3dDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATEREQUAL);
+
+    //pd3dDevice->SetRenderState(D3DRS_ZENABLE, FALSE);
+    int bground = FindTextureAlias("fontA");
+    //int bground = FindTextureAlias("die10s2");
+    int texture_number = TexMap[bground].texture;
+
+    //pd3dDevice->SetTexture(0, g_pTextureList[texture_number]); //set texture
+
+    //lpDDsurface = lpddsImagePtr[texture_number];
+
+    //if (m_pd3dDevice->SetTexture(0, lpDDsurface) != DD_OK)
+    //	PrintMessage(NULL, "SetTexture FAILED", NULL, LOGFILE_ONLY);
+
+    //D3DVIEWPORT7 vp;
+    //m_pd3dDevice->GetViewport(&vp);
+
+    for (j = 0; j < num_monsters; j++)
+    {
+
+        cullflag = 0;
+        for (cullloop = 0; cullloop < monstercount; cullloop++)
+        {
+            if (monstercull[cullloop] == monster_list[j].monsterid)
+            {
+                cullflag = 1;
+                break;
+            }
+        }
+
+        flag = 1;
+        num = 0;
+        count = 0;
+        yadjust = 0.0f;
+
+        if (monster_list[j].bIsPlayerValid && cullflag == 1 && monster_list[j].bStopAnimating == FALSE)
+        {
+
+            len = strlen(monster_list[j].chatstr);
+
+            if (len > 0)
+                len--;
+
+            while (flag)
+            {
+                count = 0;
+
+                while (monster_list[j].chatstr[num] != '!')
+                {
+
+                    junk2[count] = monster_list[j].chatstr[num];
+                    count++;
+                    num++;
+                    if (num >= len)
+                        break;
+                }
+                if (monster_list[j].chatstr[num] == '!')
+                    num++;
+
+                junk2[count] = '\0';
+
+                if (num >= len || len == 0)
+                    flag = 0;
+
+                float x = monster_list[j].x;
+                float y = monster_list[j].y + 28.0f - yadjust;
+                float z = monster_list[j].z;
+
+                yadjust += 6.0f;
+
+                countdisplay = 0;
+                display_font(0.0f, 0.0f, junk2, 255, 255, 0);
+
+                D3DUtil_SetTranslateMatrix(matWorld, D3DXVECTOR3(x, y, z));
+                D3DXMatrixRotationY(&matRotate, (angy * k + (int)3.14));
+                D3DXMatrixMultiply(&matWorld, &matRotate, &matWorld);
+
+                //pd3dDevice->SetTransform(D3DTS_WORLD, &matWorld);
+
+                //g_pVB->Lock(0, sizeof(&pMonsterCaption), (void**)&pMonsterCaption, 0);
+                for (i = 0; i < ((countdisplay)); i += 1)
+                {
+                    D3DXVECTOR3 a = D3DXVECTOR3(bubble[i].x +x , bubble[i].y +y, bubble[i].z+z);
+                    mCaption[i].position = a;
+                    //mCaption[i].color = D3DCOLOR_RGBA(105, 105, 105, 0); //0xffffffff;
+                    mCaption[i].tu = bubble[i].tu;
+                    mCaption[i].tv = bubble[i].tv;
+                }
+
+
+
+                //g_pVB->Unlock();
+
+                for (int i = 0; i < countdisplay; i = i + 4)
+                {
+                    //pd3dDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, i, 2);
+                }
+            }
+        }
+
+    }
+
+    //pd3dDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
+}
