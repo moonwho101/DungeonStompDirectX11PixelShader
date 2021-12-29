@@ -1764,15 +1764,17 @@ void DisplayPlayerCaption2(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dIm
 
                     fDot = convangle;
 
+
                     if (vw2.z < vw1.z)
                     {
-                        
                         fDot = -1.0f * (180.0f - fDot) + 90.0f;
                     }
                     else
                     {
                         fDot = 90.0f + (180.0f - fDot);
                     }
+
+
 
                     float cosine = cos_table[(int)fDot];
                     float sine = sin_table[(int)fDot];
@@ -1813,18 +1815,20 @@ void DisplayPlayerCaption2(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dIm
                 //{
                     //pd3dDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, i, 2);
                 //}
+                if (yadjust > 6) {
+                    D3D11_MAPPED_SUBRESOURCE resource;
+                    pd3dImmediateContext->Map(g_pcbCaptionBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &resource);
+                    int s = sizeof(Vertex) * 48;
+                    memcpy(resource.pData, mCaption, s);
+                    pd3dImmediateContext->Unmap(g_pcbCaptionBuffer, 0);
 
-                D3D11_MAPPED_SUBRESOURCE resource;
-                pd3dImmediateContext->Map(g_pcbCaptionBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &resource);
-                int s = sizeof(Vertex) * countdisplay;
-                memcpy(resource.pData, mCaption, s);
-                pd3dImmediateContext->Unmap(g_pcbCaptionBuffer, 0);
-
-                UINT stride = sizeof(Vertex);
-                UINT offset = 0;
-                pd3dImmediateContext->IASetVertexBuffers(0, 1, &g_pcbCaptionBuffer, &stride, &offset);
-                pd3dImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-                pd3dImmediateContext->Draw(countdisplay, 0);
+                    UINT stride = sizeof(Vertex);
+                    UINT offset = 0;
+                    pd3dImmediateContext->IASetVertexBuffers(0, 1, &g_pcbCaptionBuffer, &stride, &offset);
+                    pd3dImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+                    pd3dImmediateContext->Draw(48, 0);
+                }
+                
             }
         }
 
