@@ -1204,7 +1204,7 @@ void display_font(float x, float y, char text[1000], int r, int g, int b)
 	righttext[countr] = '\0';
 
 	strcpy_s(newtext, righttext);
-	countreverse = strlen(lefttext);
+	countreverse = strlen(righttext);
 
 	for (i = 1; i <= (int)strlen(lefttext); i++)
 	{
@@ -1216,7 +1216,9 @@ void display_font(float x, float y, char text[1000], int r, int g, int b)
 
 	y = 40;
 
-	for (j = 0; j < 2; j++)
+	//for (j = 0; j < 1; j++)
+
+	for (j = 1; j >= 0; j--)
 	{
 
 		if (j == 1)
@@ -1224,6 +1226,12 @@ void display_font(float x, float y, char text[1000], int r, int g, int b)
 			strcpy_s(newtext, reversetext);
 			if (flip == 0)
 				flip = 1;
+		}
+
+		if (j == 0)
+		{
+			//corect
+			strcpy_s(newtext, righttext);
 		}
 
 		intTextLength = strlen(newtext);
