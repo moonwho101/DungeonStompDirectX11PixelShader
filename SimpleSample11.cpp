@@ -1717,9 +1717,70 @@ void DisplayPlayerCaption2(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dIm
                 //pd3dDevice->SetTransform(D3DTS_WORLD, &matWorld);
                 //countdisplay = countdisplay;
                 //g_pVB->Lock(0, sizeof(&pMonsterCaption), (void**)&pMonsterCaption, 0);
+
+
+
+                    D3DXVECTOR3 collidenow;
+                    D3DXVECTOR3 normroadold;
+                    D3DXVECTOR3 work1, work2, vDiff, vw1,vw2;
+                    normroadold.x = 50;
+                    normroadold.y = 0;
+                    normroadold.z = 0;
+
+                    work1.x = m_vEyePt.x;
+                    work1.y = m_vEyePt.y;
+                    work1.z = m_vEyePt.z;
+
+                    work2.x = x;
+                    work2.y = y;
+                    work2.z = z;
+
+                    vDiff = work1 - work2;
+
+                    D3DXVec3Normalize(&vDiff, &vDiff);
+
+                    vw1.x = work1.x;
+                    vw1.y = work1.y;
+                    vw1.z = work1.z;
+
+                    vw2.x = work2.x;
+                    vw2.y = work2.y;
+                    vw2.z = work2.z;
+
+                    vDiff = vw1 - vw2;
+
+                    D3DXVECTOR3 final, final2;
+                    D3DXVECTOR3 m, n;
+
+
+                    D3DXVec3Normalize(&final, &vDiff);
+                    D3DXVec3Normalize(&final2, &normroadold);
+                    float fDot = D3DXVec3Dot(&final, &final2);
+
+
+                    //float fDot = dot(final, final2);
+                    float convangle;
+                    convangle = (float)acos(fDot) / k;
+
+                    fDot = convangle;
+
+                    if (vw2.z < vw1.z)
+                    {
+                        
+                        fDot = -1.0f * (180.0f - fDot) + 90.0f;
+                    }
+                    else
+                    {
+                        fDot = 90.0f + (180.0f - fDot);
+                    }
+
+                    float cosine = cos_table[(int)fDot];
+                    float sine = sin_table[(int)fDot];
+
+
                 for (i = 0; i < ((countdisplay)); i += 1)
                 {
-                    D3DXVECTOR3 a = D3DXVECTOR3(bubble[i].x +x , bubble[i].y +y, bubble[i].z+z);
+                    D3DXVECTOR3 a = D3DXVECTOR3(bubble[i].x  , bubble[i].y , bubble[i].z);
                     mCaption[i].position = a;
                     //mCaption[i].color = D3DCOLOR_RGBA(105, 105, 105, 0); //0xffffffff;
                     mCaption[i].tu = bubble[i].tu;
@@ -1727,6 +1788,24 @@ void DisplayPlayerCaption2(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dIm
 
                     totalcount++;
                 }
+
+
+                for (i = 0; i < ((countdisplay)); i += 1)
+                {
+                    float x2 = mCaption[i].position.x;
+                    float y2 = mCaption[i].position.y;
+                    float z2 = mCaption[i].position.z;
+
+                    //tx[vert_cnt] = obdata[ob_type].t[ob_vert_count].x;
+                    //ty[vert_cnt] = obdata[ob_type].t[ob_vert_count].y;
+
+                    float wx = x, wy = y, wz = z;
+
+                    mCaption[i].position.x = wx + (x2 * cosine - z2 * sine);
+                    mCaption[i].position.y = wy + y2;
+                    mCaption[i].position.z = wz + (x2 * sine + z2 * cosine);
+                }
+
                 //flag = 0;
                 //g_pVB->Unlock();
                 //totalcount = totalcount - 1;
