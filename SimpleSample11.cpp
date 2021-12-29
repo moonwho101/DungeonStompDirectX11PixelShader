@@ -797,6 +797,96 @@ void DrawScene(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateConte
     //blendStateDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
     //blendStateDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
+    ID3D11BlendState* blendState;
+    //printf("Failed To Create Blend State\n");
+    float blendFactor[] = { 1.00f, 1.00f, 1.00f, 1.0f };
+
+
+    blendStateDesc.AlphaToCoverageEnable = FALSE;
+    blendStateDesc.IndependentBlendEnable = FALSE;
+    blendStateDesc.RenderTarget[0].BlendEnable = TRUE;
+    blendStateDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_COLOR;
+    blendStateDesc.RenderTarget[0].DestBlend = D3D11_BLEND_BLEND_FACTOR;
+    blendStateDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+    blendStateDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
+    blendStateDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
+    blendStateDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+    blendStateDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+
+    pd3dDevice->CreateBlendState(&blendStateDesc, &blendState);
+
+    pd3dImmediateContext->OMSetBlendState(blendState, blendFactor, 0xffffffff);
+
+    bool draw = true;
+    currentObject = 0;
+    for (currentObject = 0; currentObject < number_of_polys_per_frame; currentObject++)
+    {
+        int i = ObjectsToDraw[currentObject].vert_index;
+        int vert_index = ObjectsToDraw[currentObject].srcstart;
+        int fperpoly = (float)ObjectsToDraw[currentObject].srcfstart;
+        int face_index = ObjectsToDraw[currentObject].srcfstart;
+
+        int texture_alias_number = texture_list_buffer[i];
+        int texture_number = TexMap[texture_alias_number].texture;
+
+        if (texture_number >= 94 && texture_number <= 101 ||
+            texture_number >= 289 - 1 && texture_number <= 296 - 1 ||
+            texture_number >= 279 - 1 && texture_number <= 288 - 1 ||
+            texture_number >= 206 - 1 && texture_number <= 210 - 1) {
+            draw = false;
+        }
+        else {
+            draw = true;
+        }
+
+        if (draw) {
+
+            //pd3dImmediateContext->SetTexture(0, g_pTextureList11[texture_number]); //set texture
+
+            pd3dImmediateContext->PSSetShaderResources(0, 1, &textures[texture_number]);
+            //pd3dImmediateContext->PSSetShaderResources(0, 1, &save_out_srv);
+
+            if (dp_command_index_mode[i] == 1 && TexMap[texture_alias_number].is_alpha_texture == TRUE) {  //USE_NON_INDEXED_DP
+                int primitive = 0;
+
+                if (dp_commands[currentObject] == D3DPT_TRIANGLEFAN)
+                {
+                    //no longer needed
+                    int v = verts_per_poly[currentObject];
+
+                    primitive = (verts_per_poly[currentObject] - 2);
+                    pd3dImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+
+                }
+                else if (dp_commands[currentObject] == D3DPT_TRIANGLESTRIP)
+                {
+
+                    int v = verts_per_poly[currentObject];
+
+                    if (v > 4)
+                        int gg = 1;
+
+                    primitive = (verts_per_poly[currentObject] - 2);
+                    pd3dImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+                    pd3dImmediateContext->Draw(v, vert_index);
+                }
+                else if (dp_commands[currentObject] == D3DPT_TRIANGLELIST)
+                {
+                    primitive = verts_per_poly[currentObject] / 3;
+                    pd3dImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+                    //This is good
+                    int  v = verts_per_poly[currentObject];
+                    pd3dImmediateContext->Draw(v, vert_index);
+                }
+            }
+        }
+
+
+    } // end for i
+
+
+
     blendStateDesc.AlphaToCoverageEnable = FALSE;
     blendStateDesc.IndependentBlendEnable = FALSE;
     blendStateDesc.RenderTarget[0].BlendEnable = TRUE;
@@ -809,21 +899,22 @@ void DrawScene(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateConte
     blendStateDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
 
+
+
+
+
     pd3dImmediateContext->VSSetShader(g_pVertexShaderTorch11, NULL, 0);
     pd3dImmediateContext->PSSetShader(g_pPixelShaderTorch11, NULL, 0);
 
+    SAFE_RELEASE(blendState);
 
-    ID3D11BlendState* blendState;
+    pd3dDevice->CreateBlendState(&blendStateDesc, &blendState);
 
-    HRESULT hr = pd3dDevice->CreateBlendState(&blendStateDesc, &blendState);
-
-    //printf("Failed To Create Blend State\n");
-    float blendFactor[] = { 1.00f, 1.00f, 1.00f, 1.0f };
 
 
     pd3dImmediateContext->OMSetBlendState(blendState, blendFactor, 0xffffffff);
 
-
+    draw = true;
 
     currentObject = 0;
     for (currentObject = 0; currentObject < number_of_polys_per_frame; currentObject++)
@@ -836,48 +927,63 @@ void DrawScene(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateConte
         int texture_alias_number = texture_list_buffer[i];
         int texture_number = TexMap[texture_alias_number].texture;
 
-        //pd3dImmediateContext->SetTexture(0, g_pTextureList11[texture_number]); //set texture
-
-        pd3dImmediateContext->PSSetShaderResources(0, 1, &textures[texture_number]);
-        //pd3dImmediateContext->PSSetShaderResources(0, 1, &save_out_srv);
-
-        if (dp_command_index_mode[i] == 1 && TexMap[texture_alias_number].is_alpha_texture == TRUE) {  //USE_NON_INDEXED_DP
-            int primitive = 0;
-
-            if (dp_commands[currentObject] == D3DPT_TRIANGLEFAN)
-            {
-                //no longer needed
-                int v = verts_per_poly[currentObject];
-
-                primitive = (verts_per_poly[currentObject] - 2);
-                pd3dImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-
-            }
-            else if (dp_commands[currentObject] == D3DPT_TRIANGLESTRIP)
-            {
-
-                int v = verts_per_poly[currentObject];
-
-                if (v > 4)
-                    int gg = 1;
-
-                primitive = (verts_per_poly[currentObject] - 2);
-                pd3dImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-                pd3dImmediateContext->Draw(v, vert_index);
-            }
-            else if (dp_commands[currentObject] == D3DPT_TRIANGLELIST)
-            {
-                primitive = verts_per_poly[currentObject] / 3;
-                pd3dImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-                //This is good
-                int  v = verts_per_poly[currentObject];
-                pd3dImmediateContext->Draw(v, vert_index);
-            }
-
+        if (texture_number >= 94 && texture_number <= 101 ||
+            texture_number >= 289 - 1 && texture_number <= 296 - 1 ||
+            texture_number >= 279 - 1 && texture_number <= 288 - 1 ||
+            texture_number >= 206 - 1 && texture_number <= 210 - 1) {
+            draw = true;
+        }
+        else {
+            draw = false;
         }
 
+        if (draw) {
+
+            //pd3dImmediateContext->SetTexture(0, g_pTextureList11[texture_number]); //set texture
+
+            pd3dImmediateContext->PSSetShaderResources(0, 1, &textures[texture_number]);
+            //pd3dImmediateContext->PSSetShaderResources(0, 1, &save_out_srv);
+
+            if (dp_command_index_mode[i] == 1 && TexMap[texture_alias_number].is_alpha_texture == TRUE) {  //USE_NON_INDEXED_DP
+                int primitive = 0;
+
+                if (dp_commands[currentObject] == D3DPT_TRIANGLEFAN)
+                {
+                    //no longer needed
+                    int v = verts_per_poly[currentObject];
+
+                    primitive = (verts_per_poly[currentObject] - 2);
+                    pd3dImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+
+                }
+                else if (dp_commands[currentObject] == D3DPT_TRIANGLESTRIP)
+                {
+
+                    int v = verts_per_poly[currentObject];
+
+                    if (v > 4)
+                        int gg = 1;
+
+                    primitive = (verts_per_poly[currentObject] - 2);
+                    pd3dImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+                    pd3dImmediateContext->Draw(v, vert_index);
+                }
+                else if (dp_commands[currentObject] == D3DPT_TRIANGLELIST)
+                {
+                    primitive = verts_per_poly[currentObject] / 3;
+                    pd3dImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+                    //This is good
+                    int  v = verts_per_poly[currentObject];
+                    pd3dImmediateContext->Draw(v, vert_index);
+                }
+            }
+        }
+
+
     } // end for i
+
+
 
             //printf("Failed To Create Blend State\n");
 
