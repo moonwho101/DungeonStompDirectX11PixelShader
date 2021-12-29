@@ -1777,6 +1777,10 @@ void DisplayPlayerCaption2(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dIm
                         fDot = 90.0f + (180.0f - fDot);
                     }
 
+                    if ((vw2.x < vw1.x) && (vw2.z < vw1.z))
+                    {
+                        fDot =  fixangle(fDot, 360.0f);
+                    }
 
 
                     float cosine = cos_table[(int)fDot];
