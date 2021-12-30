@@ -8,7 +8,7 @@ Release/
 *.log
 DungeonStomp.exe
 packages/
-packages.config
+
 
 
 
