@@ -530,7 +530,7 @@ HRESULT CALLBACK OnD3D11ResizedSwapChain(ID3D11Device* pd3dDevice, IDXGISwapChai
 
 
     //g_HUDStats.SetLocation(pBackBufferSurfaceDesc->Width - 190, 0);
-    g_HUDStats.SetLocation(-60, wHeight - 290.0f);
+    g_HUDStats.SetLocation(-35, wHeight - 290.0f);
     g_HUDStats.SetSize(290, 160);
 
     //g_HUDStats.SetTexture(1, charToWChar("D:\\GitHub\\DungeonStomp9\\UI\\box2.dds"));
