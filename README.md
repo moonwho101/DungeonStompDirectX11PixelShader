@@ -11,8 +11,8 @@ The game still runs! It also lets you to see, in real time, your dice attack/dam
 It will compile using Microsoft Visual Studio 2019 community edition.
 
 ## Compile Notes
-* Confirm VC++ INCLUDE directory has ..\dx7asdk\include
-* Confirm VC++ LIB directory has ..\dx7asdk\lib
+* Confirm VC++ INCLUDE directory has .\Include
+* Confirm VC++ LIB directory has .\Lib\x64
 
 ## Contact
 If you have any questions email me at info@aptisense.com or visit www.aptisense.com to download game installer.
