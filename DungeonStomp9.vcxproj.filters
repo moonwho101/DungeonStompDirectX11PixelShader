@@ -127,41 +127,6 @@
     <ClCompile Include="MathHelper.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="SimpleSample.hlsl">
-      <Filter>Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="SimpleSample.fx">
-      <Filter>Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="Content\Shaders\ambient.fx">
-      <Filter>Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="Content\Shaders\blinn_phong_sm20.fx">
-      <Filter>Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="Content\Shaders\blinn_phong_sm30.fx">
-      <Filter>Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="Content\Shaders\nlight_sm30.fx">
-      <Filter>Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="Content\Shaders\LightHelper.fx">
-      <Filter>Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="Content\Shaders\Lighting.fx">
-      <Filter>Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="Content\Shaders\Default.hlsl">
-      <Filter>Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="Content\Shaders\LightingUtil.hlsl">
-      <Filter>Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="Torch.hlsl">
-      <Filter>Shaders</Filter>
-    </FxCompile>
-  </ItemGroup>
-  <ItemGroup>
     <Manifest Include=".\DXUT11\Core\dpiaware.manifest" />
   </ItemGroup>
   <ItemGroup>
@@ -171,5 +136,40 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Torch.hlsl">
+      <Filter>Shaders</Filter>
+    </Text>
+    <Text Include="SimpleSample.hlsl">
+      <Filter>Shaders</Filter>
+    </Text>
+    <Text Include="SimpleSample.fx">
+      <Filter>Shaders</Filter>
+    </Text>
+    <Text Include="Content\Shaders\nlight_sm30.fx">
+      <Filter>Shaders</Filter>
+    </Text>
+    <Text Include="Content\Shaders\LightingUtil.hlsl">
+      <Filter>Shaders</Filter>
+    </Text>
+    <Text Include="Content\Shaders\Lighting.fx">
+      <Filter>Shaders</Filter>
+    </Text>
+    <Text Include="Content\Shaders\LightHelper.fx">
+      <Filter>Shaders</Filter>
+    </Text>
+    <Text Include="Content\Shaders\Default.hlsl">
+      <Filter>Shaders</Filter>
+    </Text>
+    <Text Include="Content\Shaders\blinn_phong_sm30.fx">
+      <Filter>Shaders</Filter>
+    </Text>
+    <Text Include="Content\Shaders\blinn_phong_sm20.fx">
+      <Filter>Shaders</Filter>
+    </Text>
+    <Text Include="Content\Shaders\ambient.fx">
+      <Filter>Shaders</Filter>
+    </Text>
   </ItemGroup>
 </Project>
