@@ -19,7 +19,7 @@
 #include <d3dx9.h>
 #include "d3dutil.h"
 
-
+void SetDungeonText();
 extern LPDIRECT3DTEXTURE9      g_pTextureList[MAX_NUM_TEXTURESLIST];
 void SetMaterialBright(IDirect3DDevice9* pd3dDevice);
 void SetMaterialDull(IDirect3DDevice9* pd3dDevice);
@@ -202,39 +202,7 @@ void DrawScene(IDirect3DDevice9* pd3dDevice) {
 	SetDiceTexture(false);
 
 
-
-	for (int q = 0; q < oblist_length; q++)
-	{
-		int angle = (int)oblist[q].rot_angle;
-		int ob_type = oblist[q].type;
-		if (ob_type == 120)
-		{
-			float	qdist = FastDistance(m_vEyePt.x - oblist[q].x, m_vEyePt.y - oblist[q].y, m_vEyePt.z - oblist[q].z);
-			if (qdist < 500.0f) {
-				if (strstr(oblist[q].name, "text") != NULL)
-				{
-					for (int il = 0; il < textcounter; il++)
-					{
-						if (gtext[il].textnum == q)
-						{
-							if (gtext[il].type == 0)
-							{
-								strcpy_s(gfinaltext, gtext[il].text);
-							}
-							else if (gtext[il].type == 1 || gtext[il].type == 2)
-							{
-								if (qdist < 200.0f)
-								{
-
-									DisplayDialogText(gtext[il].text, 0.0f);
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+	SetDungeonText();
 
 
 
@@ -340,6 +308,43 @@ void DrawScene(IDirect3DDevice9* pd3dDevice) {
 	DisplayPlayerCaption(pd3dDevice);
 	ShowScreenOverlays(pd3dDevice);
 	DisplayHud();
+}
+
+void SetDungeonText()
+{
+
+	for (int q = 0; q < oblist_length; q++)
+	{
+		int angle = (int)oblist[q].rot_angle;
+		int ob_type = oblist[q].type;
+		if (ob_type == 120)
+		{
+			float	qdist = FastDistance(m_vEyePt.x - oblist[q].x, m_vEyePt.y - oblist[q].y, m_vEyePt.z - oblist[q].z);
+			if (qdist < 500.0f) {
+				if (strstr(oblist[q].name, "text") != NULL)
+				{
+					for (int il = 0; il < textcounter; il++)
+					{
+						if (gtext[il].textnum == q)
+						{
+							if (gtext[il].type == 0)
+							{
+								strcpy_s(gfinaltext, gtext[il].text);
+							}
+							else if (gtext[il].type == 1 || gtext[il].type == 2)
+							{
+								if (qdist < 200.0f)
+								{
+
+									DisplayDialogText(gtext[il].text, 0.0f);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }
 
 

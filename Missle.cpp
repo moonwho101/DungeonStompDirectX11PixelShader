@@ -33,6 +33,7 @@ float culldist = 1450.0f;
 int savefailed = 0;
 int SavingThrow(int damage, int player, int level, int missleid, int isplayer, int id);
 extern D3DXVECTOR3 eTest;
+extern int damageroll;
 
 void FirePlayerMissle(float x, float y, float z, float angy, int owner, int shoot, D3DVECTOR velocity, float lookangy, FLOAT fTimeKeysave)
 {
@@ -504,6 +505,8 @@ void ApplyMissleDamage(int playernum)
 								lvl = 1;
 
 							action = your_missle[misslecount].dmg * lvl;
+
+							damageroll = your_missle[misslecount].dmg;
 
 							action = action + damagebonus;
 

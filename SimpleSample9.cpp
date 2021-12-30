@@ -66,6 +66,8 @@ void DrawText(IDirect3DDevice9* pd3dDevice, char* s);
 
 void DrawScene(IDirect3DDevice9* pd3dDevice);
 
+void SetDungeonText();
+
 extern VOID SetupMatrices(IDirect3DDevice9* pd3dDevice);
 extern void RenderText();
 extern void ObjectToD3DVertList(int ob_type, int angle, int oblist_index);

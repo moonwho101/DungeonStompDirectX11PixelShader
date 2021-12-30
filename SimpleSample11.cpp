@@ -26,7 +26,7 @@
 #include "Missle.hpp"
 #include "d3dutil.h"
 
-
+void SetDungeonText();
 int totalcount = 0;
 void DisplayHud();
 void SetDiceTexture(bool showroll);
@@ -704,7 +704,7 @@ void CALLBACK OnD3D11FrameRender(ID3D11Device* pd3dDevice, ID3D11DeviceContext* 
     DisplayHud();
     ScanMod();
     SetDiceTexture(true);
-
+    SetDungeonText();
 
     
 
