@@ -1694,8 +1694,6 @@ void ProcessLights11()
 }
 
 
-
-
 void DisplayPlayerCaption2(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateContext) {
 
     int i;
