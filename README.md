@@ -18,16 +18,8 @@ It will compile using Microsoft Visual Studio 2019 community edition.
 If you have any questions email me at info@aptisense.com or visit www.aptisense.com to download game installer.
 Happy Dungeon Stomping - Breeyark!
 
-## Secret Commands
-To execute a secret command press the / key and the chat will open.
-Enter one of the following commands:
-
-* -breeyark This will enable the in game debug menus.
-* -yyz This will give your player all weapons and spells (RUSH YYZ!).
-* -bigmoney This will give you a bunch of gold.
-
 ## MD2 Models
-Dungeon Stomp would not have been possible without the amazing MD2 models made by the following authors (if I have missed anyone, let me know.):
+Dungeon Stomp would not have been possible without the amazing MD2 models made by the following authors:
 
 * ALPHA werewolf [ Author: Andrew "ALPHAwolf" Gilmour ]
 * Bauul [ Author: Evil Bastard ]
