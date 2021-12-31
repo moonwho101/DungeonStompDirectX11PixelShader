@@ -1,5 +1,7 @@
 # Dungeon Stomp
 
+![Dungeon Stomp](../main/Textures/screenshot.jpg)
+
 Dungeon Stomp DirectX11 and Directx9.0c with Vertex and Pixel shaders.
 Using the DirectX11 SimpleSample to demonstrate switching between directx9 and directx11 in the same application.
 
