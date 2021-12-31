@@ -2,19 +2,17 @@
 
 ![Dungeon Stomp](../main/Textures/screenshot.jpg)
 
-Dungeon Stomp DirectX11 and Directx9.0c with Vertex and Pixel shaders.
-Using the DirectX11 SimpleSample to demonstrate switching between directx9 and directx11 in the same application.
+Dungeon Stomp DirectX11 with Vertex and Pixel shaders (blinn-phong).
 
-Dungeon Stomp is a DirectX 3D dungeon game that uses Direct3D, DirectInput and XAudio2.
-
-Dungeon Stomp was started it 2001.   The first beta was released in Aug of 2002.
-It is now 2021 - This is an updated version compiled with a more modern compiler.
-The game still runs! It also lets you to see, in real time, your dice attack/damage rolls.
+* Dungeon Stomp is a DirectX11 3D dungeon game that uses Direct3D, DirectInput and XAudio2.
+* It is a complete game with level advancement and 19 levels.
+* Lighting uses blinn-phong pixel shaders with help from Frank Luna's DirectX12 book.
+* Used the DirectX11 SimpleSample to demonstrate switching between Directx9.0c and Directx11 in the same application.
 
 It will compile using Microsoft Visual Studio 2019 community edition.
 
 ## Compile Notes
-* Confirm VC++ INCLUDE directory has .\Include
+Both renders are supported! Confirm VC++ INCLUDE directory has .\Include
 * Confirm VC++ LIB directory has .\Lib\x64
 
 ## Contact
