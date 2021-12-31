@@ -135,9 +135,6 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <Text Include="Torch.hlsl">
       <Filter>Shaders</Filter>
     </Text>
@@ -171,5 +168,8 @@
     <Text Include="Content\Shaders\ambient.fx">
       <Filter>Shaders</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>
