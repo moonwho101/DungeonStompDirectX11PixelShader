@@ -12,7 +12,7 @@ Dungeon Stomp DirectX11 with Vertex and Pixel shaders (blinn-phong).
 It will compile using Microsoft Visual Studio 2019 community edition.
 
 ## Compile Notes
-Both renders are supported! Confirm VC++ INCLUDE directory has .\Include
+* Confirm VC++ INCLUDE directory has .\Include
 * Confirm VC++ LIB directory has .\Lib\x64
 
 ## Contact
