@@ -130,15 +130,15 @@ HRESULT CALLBACK OnD3D9CreateDevice(IDirect3DDevice9* pd3dDevice, const D3DSURFA
 	void* pUserContext)
 {
 	// Use D3DX to create a texture from a file based image
-	if (FAILED(D3DXCreateTextureFromFile(pd3dDevice, L"banana.bmp", &g_pTexture)))
-	{
-		// If texture is not in current folder, try parent folder
-		if (FAILED(D3DXCreateTextureFromFile(pd3dDevice, L"..\\banana.bmp", &g_pTexture)))
-		{
-			MessageBox(NULL, L"Could not find banana.bmp", L"Textures.exe", MB_OK);
-			return E_FAIL;
-		}
-	}
+	//if (FAILED(D3DXCreateTextureFromFile(pd3dDevice, L"banana.bmp", &g_pTexture)))
+	//{
+	//	// If texture is not in current folder, try parent folder
+	//	if (FAILED(D3DXCreateTextureFromFile(pd3dDevice, L"..\\banana.bmp", &g_pTexture)))
+	//	{
+	//		MessageBox(NULL, L"Could not find banana.bmp", L"Textures.exe", MB_OK);
+	//		return E_FAIL;
+	//	}
+	//}
 
 
 
@@ -313,7 +313,7 @@ void CALLBACK OnD3D9FrameRender(IDirect3DDevice9* pd3dDevice, double fTime, floa
 		//pd3dDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 		pd3dDevice->SetStreamSource(0, g_pVB, 0, sizeof(CUSTOMVERTEXTEST));
 		pd3dDevice->SetFVF(D3DFVF_CUSTOMVERTEX);
-		pd3dDevice->SetTexture(0, g_pTexture); //set texture
+		//pd3dDevice->SetTexture(0, g_pTexture); //set texture
 
 		//Draw the entire world
 		DrawScene(pd3dDevice);
