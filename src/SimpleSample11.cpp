@@ -648,14 +648,14 @@ void CALLBACK OnD3D11FrameRender(ID3D11Device* pd3dDevice, ID3D11DeviceContext* 
         pVSPerFrameLight->Lights[i].SpotPower = mMainPassCB[i].SpotPower;
     }
 
-    //pd3dImmediateContext->Unmap(g_pcbVSPerFrame11, 0);
+    pd3dImmediateContext->Unmap(g_pcbVSLight11, 0);
     pd3dImmediateContext->VSSetConstantBuffers(2, 1, &g_pcbVSLight11);  //(b2)
     pd3dImmediateContext->PSSetConstantBuffers(2, 1, &g_pcbVSLight11);
 
     // Set the constant buffers
-    //D3D11_MAPPED_SUBRESOURCE MappedResource;
-    //V(pd3dImmediateContext->Map(g_pcbVSPerFrame11, 0, D3D11_MAP_WRITE_DISCARD, 0, &MappedResource));
-    CB_VS_PER_FRAME* pVSPerFrame = (CB_VS_PER_FRAME*)MappedResource2.pData;
+    D3D11_MAPPED_SUBRESOURCE MappedResource;
+    V(pd3dImmediateContext->Map(g_pcbVSPerFrame11, 0, D3D11_MAP_WRITE_DISCARD, 0, &MappedResource));
+    CB_VS_PER_FRAME* pVSPerFrame = (CB_VS_PER_FRAME*)MappedResource.pData;
     pVSPerFrame->m_vLightDir = D3DXVECTOR3(0, 0.707f, -0.707f);
     pVSPerFrame->m_fTime = (float)fTime;
     pVSPerFrame->m_LightDiffuse = D3DXVECTOR4(1.f, 1.f, 1.f, 1.f);
