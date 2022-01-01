@@ -496,7 +496,7 @@ void UpdateWorld(float fElapsedTime) {
 		//120 = text
 
 		//if (ob_type != 120 && ob_type != 35 && ob_type != 131 && ob_type != 6)
-		if (ob_type != 35 && ob_type != 131 && ob_type != 6)
+		if (ob_type != 35 && ob_type != 131 && ob_type != 6 && ob_type != 120)
 		{
 			float	qdist = FastDistance(m_vEyePt.x - oblist[q].x, m_vEyePt.y - oblist[q].y, m_vEyePt.z - oblist[q].z);
 
