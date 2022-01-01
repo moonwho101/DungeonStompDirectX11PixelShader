@@ -879,7 +879,7 @@ void InitShaderApp(IDirect3DDevice9* pd3dDevice)
 
 
 
-	if (!LoadShader("Content/Shaders/nlight_sm30.fx", g_pBlinnPhongEffectSM30, pd3dDevice)) {
+	if (!LoadShader("../Content/Shaders/nlight_sm30.fx", g_pBlinnPhongEffectSM30, pd3dDevice)) {
 		//	throw std::runtime_error("Failed to load shader: blinn_phong_sm30.fx.");
 
 		int stop = 1;
