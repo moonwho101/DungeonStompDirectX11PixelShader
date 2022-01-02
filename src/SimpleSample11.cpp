@@ -360,7 +360,7 @@ HRESULT CALLBACK OnD3D11CreateDevice(ID3D11Device* pd3dDevice, const DXGI_SURFAC
 
     // Read the HLSL file
     WCHAR str[MAX_PATH];
-    V_RETURN(DXUTFindDXSDKMediaFileCch(str, MAX_PATH, L"..\\src\\SimpleSample.hlsl"));
+    V_RETURN(DXUTFindDXSDKMediaFileCch(str, MAX_PATH, L"../Content/Shaders/SimpleSample.hlsl"));
 
     // Compile the shaders - D3DCOMPILE_ENABLE_STRICTNESS
     DWORD dwShaderFlags = D3DCOMPILE_SKIP_VALIDATION;
@@ -392,7 +392,7 @@ HRESULT CALLBACK OnD3D11CreateDevice(ID3D11Device* pd3dDevice, const DXGI_SURFAC
     DXUT_SetDebugName(g_pPixelShader11, "RenderScenePS");
 
 
-    V_RETURN(DXUTFindDXSDKMediaFileCch(str, MAX_PATH, L"..\\src\\Torch.hlsl"));
+    V_RETURN(DXUTFindDXSDKMediaFileCch(str, MAX_PATH, L"../Content/Shaders/Torch.hlsl"));
 
 
     // You should use the lowest possible shader profile for your shader to enable various feature levels. These

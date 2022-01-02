@@ -135,15 +135,6 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Torch.hlsl">
-      <Filter>Shaders</Filter>
-    </Text>
-    <Text Include="SimpleSample.hlsl">
-      <Filter>Shaders</Filter>
-    </Text>
-    <Text Include="SimpleSample.fx">
-      <Filter>Shaders</Filter>
-    </Text>
     <Text Include="Content\Shaders\nlight_sm30.fx">
       <Filter>Shaders</Filter>
     </Text>
@@ -166,6 +157,15 @@
       <Filter>Shaders</Filter>
     </Text>
     <Text Include="Content\Shaders\ambient.fx">
+      <Filter>Shaders</Filter>
+    </Text>
+    <Text Include="..\Content\Shaders\SimpleSample.fx">
+      <Filter>Shaders</Filter>
+    </Text>
+    <Text Include="..\Content\Shaders\SimpleSample.hlsl">
+      <Filter>Shaders</Filter>
+    </Text>
+    <Text Include="..\Content\Shaders\Torch.hlsl">
       <Filter>Shaders</Filter>
     </Text>
   </ItemGroup>
