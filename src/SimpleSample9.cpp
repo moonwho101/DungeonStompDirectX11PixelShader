@@ -259,8 +259,12 @@ HRESULT CALLBACK OnD3D9ResetDevice(IDirect3DDevice9* pd3dDevice,
 	wWidth = pBackBufferSurfaceDesc->Width;
 	wHeight = (FLOAT)pBackBufferSurfaceDesc->Height;
 
-	g_AspectRation = fAspectRatio - 0.6f;
+	//g_AspectRation = fAspectRatio - 0.6f;
+	//g_Camera.SetProjParams(D3DX_PI / 4, fAspectRatio, 0.1f, 1000.0f);
+
+	g_AspectRation = fAspectRatio;
 	g_Camera.SetProjParams(D3DX_PI / 4, fAspectRatio, 0.1f, 1000.0f);
+
 	g_Camera.SetWindow(pBackBufferSurfaceDesc->Width, pBackBufferSurfaceDesc->Height);
 
 	g_HUD.SetLocation(pBackBufferSurfaceDesc->Width - 170, 0);
@@ -375,7 +379,7 @@ VOID SetupMatrices(IDirect3DDevice9* pd3dDevice)
 	// what distances geometry should be no longer be rendered).
 
 	D3DXMATRIXA16 matProj;
-	D3DXMatrixPerspectiveFovLH(&matProj, D3DX_PI / 2, g_AspectRation,0.1f, 50000.0f);
+	D3DXMatrixPerspectiveFovLH(&matProj, D3DX_PI / 4, g_AspectRation,0.1f, 50000.0f);
 	
 	pd3dDevice->SetTransform(D3DTS_PROJECTION, &matProj);
 	
