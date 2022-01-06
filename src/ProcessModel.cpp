@@ -895,7 +895,7 @@ void PlayerToD3DVertList(int pmodel_id, int curr_frame, int angle, int texture_a
 
 	} // end for vert_cnt
 
-
+	//Smooth the vertex normals out so the models look less blocky.
 	
 	int sharedv[1000];
 	int scount = 0;
@@ -919,7 +919,7 @@ void PlayerToD3DVertList(int pmodel_id, int curr_frame, int angle, int texture_a
 					if (x == src_v[j].x && y == src_v[j].y && z == src_v[j].z) {
 						//found shared vertex
 						track[j - start_cnt] = 1;
-						sharedv[scount] = cnt;
+						sharedv[scount] = j;
 						scount++;
 					}
 				//}
@@ -949,7 +949,6 @@ void PlayerToD3DVertList(int pmodel_id, int curr_frame, int angle, int texture_a
 			}
 		}
 	}
-
 	
 
 	return;
