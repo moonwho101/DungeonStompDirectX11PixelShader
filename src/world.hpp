@@ -420,7 +420,7 @@ extern int* verts_per_poly;
 extern int number_of_polys_per_frame;
 extern int* faces_per_poly;
 extern int* src_f;
-extern D3DVERTEX temp_v[20000]; // debug
+extern D3DVERTEX temp_v[120000]; // debug
 extern D3DVERTEX* src_v;
 extern D3DPRIMITIVETYPE* dp_commands;
 extern BOOL* dp_command_index_mode;

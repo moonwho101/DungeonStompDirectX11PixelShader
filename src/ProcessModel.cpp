@@ -14,7 +14,7 @@
 #include "GameLogic.hpp"
 #include "Missle.hpp"
 
-
+void ConvertTraingleStrip(int fan_cnt);
 
 void ConvertTraingleFan(int fan_cnt);
 extern OBJECTLIST* oblist;
@@ -33,7 +33,7 @@ int* verts_per_poly;
 int number_of_polys_per_frame;
 int* faces_per_poly;
 int* src_f;
-D3DVERTEX temp_v[20000]; // debug
+D3DVERTEX temp_v[120000]; // debug
 int tempvcounter = 0;
 D3DVERTEX* src_v;
 int drawthistri = 1;
@@ -611,9 +611,9 @@ void PlayerToD3DVertList(int pmodel_id, int curr_frame, int angle, int texture_a
 		int firstcount = 0;
 		int fan_cnt = -1;
 
-		if (p_command == D3DPT_TRIANGLEFAN) {
+		//if (p_command == D3DPT_TRIANGLEFAN) {
 			fan_cnt = cnt;
-		}
+		//}
 
 		for (j = 0; j < num_verts_per_poly; j++)
 		{
@@ -845,8 +845,20 @@ void PlayerToD3DVertList(int pmodel_id, int curr_frame, int angle, int texture_a
 		dp_command_index_mode[number_of_polys_per_frame] = USE_NON_INDEXED_DP;
 		dp_commands[number_of_polys_per_frame] = p_command;
 
-		if (p_command == D3DPT_TRIANGLESTRIP)
+		if (p_command == D3DPT_TRIANGLESTRIP) {
 			num_triangles_in_scene += (num_verts_per_poly - 2);
+
+			ConvertTraingleStrip(fan_cnt);
+			dp_commands[number_of_polys_per_frame] = D3DPT_TRIANGLELIST;
+
+			if (num_verts_per_poly > 3) {
+				num_verts_per_poly = (num_verts_per_poly - 3) * 3;
+
+				verts_per_poly[number_of_polys_per_frame] = (num_verts_per_poly + 3);
+			}
+
+
+		}
 
 
 		if (p_command == D3DPT_TRIANGLELIST)
@@ -1012,7 +1024,7 @@ void ConvertTraingleFan(int fan_cnt) {
 		src_v[fan_cnt + i].tu = temp_v[i].tu;
 		src_v[fan_cnt + i].tv = temp_v[i].tv;
 
-		
+
 		if (normal == 2) {
 
 			normal = 0;
@@ -1084,6 +1096,203 @@ void ConvertTraingleFan(int fan_cnt) {
 		else {
 			normal++;
 		}
+	}
+	cnt = fan_cnt + counter;
+
+}
+
+
+void ConvertTraingleStrip(int fan_cnt) {
+
+
+
+
+	int counter = 0;
+	int v = 0;
+
+	for (int i = fan_cnt;i < cnt;i++) {
+
+		if (counter < 3) {
+
+			temp_v[counter].x = src_v[i].x;
+			temp_v[counter].y = src_v[i].y;
+			temp_v[counter].z = src_v[i].z;
+			temp_v[counter].nx = src_v[i].nx;
+			temp_v[counter].ny = src_v[i].ny;
+			temp_v[counter].nz = src_v[i].nz;
+			temp_v[counter].tu = src_v[i].tu;
+			temp_v[counter].tv = src_v[i].tv;
+
+			counter++;
+		}
+		else {
+
+
+			if (v == 0 ) {
+
+				temp_v[counter].x = src_v[i - 2].x;
+				temp_v[counter].y = src_v[i - 2].y;
+				temp_v[counter].z = src_v[i - 2].z;
+				temp_v[counter].nx = src_v[i - 2].nx;
+				temp_v[counter].ny = src_v[i - 2].ny;
+				temp_v[counter].nz = src_v[i - 2].nz;
+				temp_v[counter].tu = src_v[i - 2].tu;
+				temp_v[counter].tv = src_v[i - 2].tv;
+				counter++;
+
+
+
+				temp_v[counter].x = src_v[i].x;
+				temp_v[counter].y = src_v[i].y;
+				temp_v[counter].z = src_v[i].z;
+				temp_v[counter].nx = src_v[i].nx;
+				temp_v[counter].ny = src_v[i].ny;
+				temp_v[counter].nz = src_v[i].nz;
+				temp_v[counter].tu = src_v[i].tu;
+				temp_v[counter].tv = src_v[i].tv;
+				counter++;
+
+				temp_v[counter].x = src_v[i - 1].x;
+				temp_v[counter].y = src_v[i - 1].y;
+				temp_v[counter].z = src_v[i - 1].z;
+				temp_v[counter].nx = src_v[i - 1].nx;
+				temp_v[counter].ny = src_v[i - 1].ny;
+				temp_v[counter].nz = src_v[i - 1].nz;
+				temp_v[counter].tu = src_v[i - 1].tu;
+				temp_v[counter].tv = src_v[i - 1].tv;
+
+				counter++;
+
+				v = 1;
+			}
+			else {
+
+				temp_v[counter].x = src_v[i - 2].x;
+				temp_v[counter].y = src_v[i - 2].y;
+				temp_v[counter].z = src_v[i - 2].z;
+				temp_v[counter].nx = src_v[i - 2].nx;
+				temp_v[counter].ny = src_v[i - 2].ny;
+				temp_v[counter].nz = src_v[i - 2].nz;
+				temp_v[counter].tu = src_v[i - 2].tu;
+				temp_v[counter].tv = src_v[i - 2].tv;
+				counter++;
+
+				temp_v[counter].x = src_v[i - 1].x;
+				temp_v[counter].y = src_v[i - 1].y;
+				temp_v[counter].z = src_v[i - 1].z;
+				temp_v[counter].nx = src_v[i - 1].nx;
+				temp_v[counter].ny = src_v[i - 1].ny;
+				temp_v[counter].nz = src_v[i - 1].nz;
+				temp_v[counter].tu = src_v[i - 1].tu;
+				temp_v[counter].tv = src_v[i - 1].tv;
+
+				counter++;
+				temp_v[counter].x = src_v[i].x;
+				temp_v[counter].y = src_v[i].y;
+				temp_v[counter].z = src_v[i].z;
+				temp_v[counter].nx = src_v[i].nx;
+				temp_v[counter].ny = src_v[i].ny;
+				temp_v[counter].nz = src_v[i].nz;
+				temp_v[counter].tu = src_v[i].tu;
+				temp_v[counter].tv = src_v[i].tv;
+				counter++;
+
+
+				v = 0;
+
+			}
+
+
+		}
+
+	}
+
+	int normal = 0;
+
+	for (int i = 0;i < counter;i++) {
+		src_v[fan_cnt + i].x = temp_v[i].x;
+		src_v[fan_cnt + i].y = temp_v[i].y;
+		src_v[fan_cnt + i].z = temp_v[i].z;
+
+		src_v[fan_cnt + i].nx = temp_v[i].nx;
+		src_v[fan_cnt + i].ny = temp_v[i].ny;
+		src_v[fan_cnt + i].nz = temp_v[i].nz;
+
+		src_v[fan_cnt + i].tu = temp_v[i].tu;
+		src_v[fan_cnt + i].tv = temp_v[i].tv;
+
+
+		//if (normal == 2) {
+
+		//	normal = 0;
+		//	D3DXVECTOR3 vw1, vw2, vw3;
+
+		//	vw1.x = D3DVAL(src_v[(fan_cnt + i) - 2].x);
+		//	vw1.y = D3DVAL(src_v[(fan_cnt + i) - 2].y);
+		//	vw1.z = D3DVAL(src_v[(fan_cnt + i) - 2].z);
+
+		//	vw2.x = D3DVAL(src_v[(fan_cnt + i) - 1].x);
+		//	vw2.y = D3DVAL(src_v[(fan_cnt + i) - 1].y);
+		//	vw2.z = D3DVAL(src_v[(fan_cnt + i) - 1].z);
+
+		//	vw3.x = D3DVAL(src_v[(fan_cnt + i)].x);
+		//	vw3.y = D3DVAL(src_v[(fan_cnt + i)].y);
+		//	vw3.z = D3DVAL(src_v[(fan_cnt + i)].z);
+
+		//	// calculate the NORMAL for the road using the CrossProduct <-important!
+
+		//	D3DXVECTOR3 vDiff = vw1 - vw2;
+		//	D3DXVECTOR3 vDiff2 = vw3 - vw2;
+		//	D3DXVECTOR3 vCross, final;
+
+		//	D3DXVec3Cross(&vCross, &vDiff, &vDiff2);
+		//	D3DXVec3Normalize(&final, &vCross);
+
+
+		//	D3DXVECTOR3 x1, x2, x3;
+		//	D3DXVECTOR3 average;
+		//	D3DXVECTOR3 sum = D3DXVECTOR3(0, 0, 0);
+
+		//	x1.x = src_v[(fan_cnt + i) - 2].nx;
+		//	x1.y = src_v[(fan_cnt + i) - 2].ny;
+		//	x1.z = src_v[(fan_cnt + i) - 2].nz;
+
+		//	x2.x = src_v[(fan_cnt + i) - 1].nx;
+		//	x2.y = src_v[(fan_cnt + i) - 1].ny;
+		//	x2.z = src_v[(fan_cnt + i) - 1].nz;
+
+		//	x3.x = src_v[(fan_cnt + i)].nx;
+		//	x3.y = src_v[(fan_cnt + i)].ny;
+		//	x3.z = src_v[(fan_cnt + i)].nz;
+
+		//	sum = x1 + x2 + x3;
+
+		//	//sum = sum / 3;
+
+
+		//	D3DXVec3Normalize(&average, &sum);
+
+
+		//	float workx = (-final.x);
+		//	float worky = (-final.y);
+		//	float workz = (-final.z);
+
+		//	src_v[(fan_cnt + i) - 2].nx = workx;
+		//	src_v[(fan_cnt + i) - 2].ny = worky;
+		//	src_v[(fan_cnt + i) - 2].nz = workz;
+
+		//	src_v[(fan_cnt + i) - 1].nx = workx;
+		//	src_v[(fan_cnt + i) - 1].ny = worky;
+		//	src_v[(fan_cnt + i) - 1].nz = workz;
+
+		//	src_v[(fan_cnt + i)].nx = workx;
+		//	src_v[(fan_cnt + i)].ny = worky;
+		//	src_v[(fan_cnt + i)].nz = workz;
+
+		//}
+		//else {
+		//	normal++;
+		//}
 	}
 	cnt = fan_cnt + counter;
 
