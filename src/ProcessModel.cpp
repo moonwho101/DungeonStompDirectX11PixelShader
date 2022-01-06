@@ -1012,22 +1012,23 @@ void ConvertTraingleFan(int fan_cnt) {
 		src_v[fan_cnt + i].tu = temp_v[i].tu;
 		src_v[fan_cnt + i].tv = temp_v[i].tv;
 
+		
 		if (normal == 2) {
 
 			normal = 0;
 			D3DXVECTOR3 vw1, vw2, vw3;
 
-			vw1.x = D3DVAL(src_v[i - 2].x);
-			vw1.y = D3DVAL(src_v[i - 2].y);
-			vw1.z = D3DVAL(src_v[i - 2].z);
+			vw1.x = D3DVAL(src_v[(fan_cnt + i) - 2].x);
+			vw1.y = D3DVAL(src_v[(fan_cnt + i) - 2].y);
+			vw1.z = D3DVAL(src_v[(fan_cnt + i) - 2].z);
 
-			vw2.x = D3DVAL(src_v[i - 1].x);
-			vw2.y = D3DVAL(src_v[i - 1].y);
-			vw2.z = D3DVAL(src_v[i - 1].z);
+			vw2.x = D3DVAL(src_v[(fan_cnt + i) - 1].x);
+			vw2.y = D3DVAL(src_v[(fan_cnt + i) - 1].y);
+			vw2.z = D3DVAL(src_v[(fan_cnt + i) - 1].z);
 
-			vw3.x = D3DVAL(src_v[i].x);
-			vw3.y = D3DVAL(src_v[i].y);
-			vw3.z = D3DVAL(src_v[i].z);
+			vw3.x = D3DVAL(src_v[(fan_cnt + i)].x);
+			vw3.y = D3DVAL(src_v[(fan_cnt + i)].y);
+			vw3.z = D3DVAL(src_v[(fan_cnt + i)].z);
 
 			// calculate the NORMAL for the road using the CrossProduct <-important!
 
@@ -1043,17 +1044,17 @@ void ConvertTraingleFan(int fan_cnt) {
 			D3DXVECTOR3 average;
 			D3DXVECTOR3 sum = D3DXVECTOR3(0, 0, 0);
 
-			x1.x = src_v[cnt - 2].nx;
-			x1.y = src_v[cnt - 2].ny;
-			x1.z = src_v[cnt - 2].nz;
+			x1.x = src_v[(fan_cnt + i) - 2].nx;
+			x1.y = src_v[(fan_cnt + i) - 2].ny;
+			x1.z = src_v[(fan_cnt + i) - 2].nz;
 
-			x2.x = src_v[cnt - 1].nx;
-			x2.y = src_v[cnt - 1].ny;
-			x2.z = src_v[cnt - 1].nz;
+			x2.x = src_v[(fan_cnt + i) - 1].nx;
+			x2.y = src_v[(fan_cnt + i) - 1].ny;
+			x2.z = src_v[(fan_cnt + i) - 1].nz;
 
-			x3.x = src_v[cnt].nx;
-			x3.y = src_v[cnt].ny;
-			x3.z = src_v[cnt].nz;
+			x3.x = src_v[(fan_cnt + i)].nx;
+			x3.y = src_v[(fan_cnt + i)].ny;
+			x3.z = src_v[(fan_cnt + i)].nz;
 
 			sum = x1 + x2 + x3;
 
@@ -1063,24 +1064,26 @@ void ConvertTraingleFan(int fan_cnt) {
 			D3DXVec3Normalize(&average, &sum);
 
 
-			float workx = (-average.x);
-			float worky = (-average.y);
-			float workz = (-average.z);
+			float workx = (-final.x);
+			float worky = (-final.y);
+			float workz = (-final.z);
 
-			src_v[i - 2].nx = workx;
-			src_v[i - 2].ny = worky;
-			src_v[i - 2].nz = workz;
+			src_v[(fan_cnt + i) - 2].nx = workx;
+			src_v[(fan_cnt + i) - 2].ny = worky;
+			src_v[(fan_cnt + i) - 2].nz = workz;
 
-			src_v[i - 1].nx = workx;
-			src_v[i - 1].ny = worky;
-			src_v[i - 1].nz = workz;
+			src_v[(fan_cnt + i) - 1].nx = workx;
+			src_v[(fan_cnt + i) - 1].ny = worky;
+			src_v[(fan_cnt + i) - 1].nz = workz;
 
-			src_v[i].nx = workx;
-			src_v[i].ny = worky;
-			src_v[i].nz = workz;
+			src_v[(fan_cnt + i)].nx = workx;
+			src_v[(fan_cnt + i)].ny = worky;
+			src_v[(fan_cnt + i)].nz = workz;
 
 		}
-		normal++;
+		else {
+			normal++;
+		}
 	}
 	cnt = fan_cnt + counter;
 
