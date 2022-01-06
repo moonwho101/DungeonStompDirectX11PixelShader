@@ -1222,77 +1222,77 @@ void ConvertTraingleStrip(int fan_cnt) {
 		src_v[fan_cnt + i].tv = temp_v[i].tv;
 
 
-		//if (normal == 2) {
+		if (normal == 2) {
 
-		//	normal = 0;
-		//	D3DXVECTOR3 vw1, vw2, vw3;
+			normal = 0;
+			D3DXVECTOR3 vw1, vw2, vw3;
 
-		//	vw1.x = D3DVAL(src_v[(fan_cnt + i) - 2].x);
-		//	vw1.y = D3DVAL(src_v[(fan_cnt + i) - 2].y);
-		//	vw1.z = D3DVAL(src_v[(fan_cnt + i) - 2].z);
+			vw1.x = D3DVAL(src_v[(fan_cnt + i) - 2].x);
+			vw1.y = D3DVAL(src_v[(fan_cnt + i) - 2].y);
+			vw1.z = D3DVAL(src_v[(fan_cnt + i) - 2].z);
 
-		//	vw2.x = D3DVAL(src_v[(fan_cnt + i) - 1].x);
-		//	vw2.y = D3DVAL(src_v[(fan_cnt + i) - 1].y);
-		//	vw2.z = D3DVAL(src_v[(fan_cnt + i) - 1].z);
+			vw2.x = D3DVAL(src_v[(fan_cnt + i) - 1].x);
+			vw2.y = D3DVAL(src_v[(fan_cnt + i) - 1].y);
+			vw2.z = D3DVAL(src_v[(fan_cnt + i) - 1].z);
 
-		//	vw3.x = D3DVAL(src_v[(fan_cnt + i)].x);
-		//	vw3.y = D3DVAL(src_v[(fan_cnt + i)].y);
-		//	vw3.z = D3DVAL(src_v[(fan_cnt + i)].z);
+			vw3.x = D3DVAL(src_v[(fan_cnt + i)].x);
+			vw3.y = D3DVAL(src_v[(fan_cnt + i)].y);
+			vw3.z = D3DVAL(src_v[(fan_cnt + i)].z);
 
-		//	// calculate the NORMAL for the road using the CrossProduct <-important!
+			// calculate the NORMAL for the road using the CrossProduct <-important!
 
-		//	D3DXVECTOR3 vDiff = vw1 - vw2;
-		//	D3DXVECTOR3 vDiff2 = vw3 - vw2;
-		//	D3DXVECTOR3 vCross, final;
+			D3DXVECTOR3 vDiff = vw1 - vw2;
+			D3DXVECTOR3 vDiff2 = vw3 - vw2;
+			D3DXVECTOR3 vCross, final;
 
-		//	D3DXVec3Cross(&vCross, &vDiff, &vDiff2);
-		//	D3DXVec3Normalize(&final, &vCross);
-
-
-		//	D3DXVECTOR3 x1, x2, x3;
-		//	D3DXVECTOR3 average;
-		//	D3DXVECTOR3 sum = D3DXVECTOR3(0, 0, 0);
-
-		//	x1.x = src_v[(fan_cnt + i) - 2].nx;
-		//	x1.y = src_v[(fan_cnt + i) - 2].ny;
-		//	x1.z = src_v[(fan_cnt + i) - 2].nz;
-
-		//	x2.x = src_v[(fan_cnt + i) - 1].nx;
-		//	x2.y = src_v[(fan_cnt + i) - 1].ny;
-		//	x2.z = src_v[(fan_cnt + i) - 1].nz;
-
-		//	x3.x = src_v[(fan_cnt + i)].nx;
-		//	x3.y = src_v[(fan_cnt + i)].ny;
-		//	x3.z = src_v[(fan_cnt + i)].nz;
-
-		//	sum = x1 + x2 + x3;
-
-		//	//sum = sum / 3;
+			D3DXVec3Cross(&vCross, &vDiff, &vDiff2);
+			D3DXVec3Normalize(&final, &vCross);
 
 
-		//	D3DXVec3Normalize(&average, &sum);
+			D3DXVECTOR3 x1, x2, x3;
+			D3DXVECTOR3 average;
+			D3DXVECTOR3 sum = D3DXVECTOR3(0, 0, 0);
+
+			x1.x = src_v[(fan_cnt + i) - 2].nx;
+			x1.y = src_v[(fan_cnt + i) - 2].ny;
+			x1.z = src_v[(fan_cnt + i) - 2].nz;
+
+			x2.x = src_v[(fan_cnt + i) - 1].nx;
+			x2.y = src_v[(fan_cnt + i) - 1].ny;
+			x2.z = src_v[(fan_cnt + i) - 1].nz;
+
+			x3.x = src_v[(fan_cnt + i)].nx;
+			x3.y = src_v[(fan_cnt + i)].ny;
+			x3.z = src_v[(fan_cnt + i)].nz;
+
+			sum = x1 + x2 + x3;
+
+			//sum = sum / 3;
 
 
-		//	float workx = (-final.x);
-		//	float worky = (-final.y);
-		//	float workz = (-final.z);
+			D3DXVec3Normalize(&average, &sum);
 
-		//	src_v[(fan_cnt + i) - 2].nx = workx;
-		//	src_v[(fan_cnt + i) - 2].ny = worky;
-		//	src_v[(fan_cnt + i) - 2].nz = workz;
 
-		//	src_v[(fan_cnt + i) - 1].nx = workx;
-		//	src_v[(fan_cnt + i) - 1].ny = worky;
-		//	src_v[(fan_cnt + i) - 1].nz = workz;
+			float workx = (-final.x);
+			float worky = (-final.y);
+			float workz = (-final.z);
 
-		//	src_v[(fan_cnt + i)].nx = workx;
-		//	src_v[(fan_cnt + i)].ny = worky;
-		//	src_v[(fan_cnt + i)].nz = workz;
+			src_v[(fan_cnt + i) - 2].nx = workx;
+			src_v[(fan_cnt + i) - 2].ny = worky;
+			src_v[(fan_cnt + i) - 2].nz = workz;
 
-		//}
-		//else {
-		//	normal++;
-		//}
+			src_v[(fan_cnt + i) - 1].nx = workx;
+			src_v[(fan_cnt + i) - 1].ny = worky;
+			src_v[(fan_cnt + i) - 1].nz = workz;
+
+			src_v[(fan_cnt + i)].nx = workx;
+			src_v[(fan_cnt + i)].ny = worky;
+			src_v[(fan_cnt + i)].nz = workz;
+
+		}
+		else {
+			normal++;
+		}
 	}
 	cnt = fan_cnt + counter;
 
