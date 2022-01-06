@@ -26,6 +26,10 @@ float mx[100], my[100], mz[100], mw[100];
 float cx[100], cy[100], cz[100], cw[100];
 float tx[10000], ty[10000];
 
+int sharedv[1000];
+int track[60000];
+
+
 void SmoothNormals(int start_cnt);
 extern SWITCHMOD* switchmodify;
 int countswitches;
@@ -909,10 +913,8 @@ void SmoothNormals(int start_cnt) {
 
 
 	//Smooth the vertex normals out so the models look less blocky.
-
-	int sharedv[1000];
 	int scount = 0;
-	int track[60000];
+
 
 	for (int i = 0;i < 60000;i++) {
 		track[i] = 0;
