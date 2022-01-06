@@ -33,6 +33,7 @@ void ProcessLights();
 void SetDiceTexture(bool showroll);
 void DisplayPlayerCaption(IDirect3DDevice9* pd3dDevice);
 void statusbardisplay(float x, float length, int type);
+void SmoothNormals(int start_cnt);
 
 extern int textcounter;
 extern gametext gtext[200];
@@ -502,6 +503,8 @@ void DrawIndexedItems(int fakel, int vert_index)
 
 		}
 
+		int start_cnt = cnt;
+
 		for (int j = 0; j < dwIndexCount; j++)
 		{
 			D3DXVECTOR3 a = D3DXVECTOR3(temp_v[j].x, temp_v[j].y, temp_v[j].z);
@@ -515,6 +518,9 @@ void DrawIndexedItems(int fakel, int vert_index)
 			src_v[cnt].nz = temp_v[j].nz;
 			cnt++;
 		}
+
+		SmoothNormals(start_cnt);
+
 	}
 }
 

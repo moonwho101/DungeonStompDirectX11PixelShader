@@ -26,6 +26,7 @@ float mx[100], my[100], mz[100], mw[100];
 float cx[100], cy[100], cz[100], cw[100];
 float tx[10000], ty[10000];
 
+void SmoothNormals(int start_cnt);
 extern SWITCHMOD* switchmodify;
 int countswitches;
 
@@ -115,6 +116,8 @@ void ObjectToD3DVertList(int ob_type, int angle, int oblist_index)
 
 	ob_vert_count = 0;
 	poly = num_polys_per_object[ob_type];
+
+	int start_cnt = cnt;
 
 	for (w = 0; w < poly; w++)
 	{
@@ -419,6 +422,8 @@ void ObjectToD3DVertList(int ob_type, int angle, int oblist_index)
 			//PrintMessage(NULL, "CMyD3DApplication::ObjectToD3DVertList -  ERROR UNRECOGNISED COMMAND", NULL, LOGFILE_ONLY);
 
 	} // end for w
+	
+	//SmoothNormals(start_cnt);
 
 	//return;
 }
@@ -895,8 +900,16 @@ void PlayerToD3DVertList(int pmodel_id, int curr_frame, int angle, int texture_a
 
 	} // end for vert_cnt
 
+	SmoothNormals(start_cnt);
+
+	return;
+}
+
+void SmoothNormals(int start_cnt) {
+
+
 	//Smooth the vertex normals out so the models look less blocky.
-	
+
 	int sharedv[1000];
 	int scount = 0;
 	int track[60000];
@@ -916,12 +929,12 @@ void PlayerToD3DVertList(int pmodel_id, int curr_frame, int angle, int texture_a
 
 			for (int j = start_cnt;j < cnt;j++) {
 				//if (i != j) {
-					if (x == src_v[j].x && y == src_v[j].y && z == src_v[j].z) {
-						//found shared vertex
-						track[j - start_cnt] = 1;
-						sharedv[scount] = j;
-						scount++;
-					}
+				if (x == src_v[j].x && y == src_v[j].y && z == src_v[j].z) {
+					//found shared vertex
+					track[j - start_cnt] = 1;
+					sharedv[scount] = j;
+					scount++;
+				}
 				//}
 			}
 
@@ -949,9 +962,8 @@ void PlayerToD3DVertList(int pmodel_id, int curr_frame, int angle, int texture_a
 			}
 		}
 	}
-	
 
-	return;
+
 }
 
 void ConvertTraingleFan(int fan_cnt) {
@@ -1659,6 +1671,8 @@ void PlayerToD3DIndexedVertList(int pmodel_id, int curr_frame, int angle, int te
 
 	ObjectsToDraw[number_of_polys_per_frame].srcstart = cnt;
 
+	int start_cnt = cnt;
+
 	for (i = 0; i < num_poly; i++)
 	{
 		poly_command = pmdata[pmodel_id].poly_cmd[i];
@@ -1871,6 +1885,10 @@ void PlayerToD3DIndexedVertList(int pmodel_id, int curr_frame, int angle, int te
 		fprintf(fp, " \n\n");
 		fclose(fp);
 	}*/
+
+
+	
+	
 
 	return;
 }
