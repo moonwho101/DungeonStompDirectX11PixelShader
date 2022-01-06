@@ -896,7 +896,7 @@ void PlayerToD3DVertList(int pmodel_id, int curr_frame, int angle, int texture_a
 	} // end for vert_cnt
 
 
-	/*
+	
 	int sharedv[1000];
 	int scount = 0;
 	int track[60000];
@@ -912,13 +912,13 @@ void PlayerToD3DVertList(int pmodel_id, int curr_frame, int angle, int texture_a
 
 		scount = 0;
 
-		if (track[i] == 0) {
+		if (track[i - start_cnt] == 0) {
 
 			for (int j = start_cnt;j < cnt;j++) {
 				//if (i != j) {
 					if (x == src_v[j].x && y == src_v[j].y && z == src_v[j].z) {
 						//found shared vertex
-						track[j] = 1;
+						track[j - start_cnt] = 1;
 						sharedv[scount] = cnt;
 						scount++;
 					}
@@ -950,7 +950,7 @@ void PlayerToD3DVertList(int pmodel_id, int curr_frame, int angle, int texture_a
 		}
 	}
 
-	*/
+	
 
 	return;
 }
