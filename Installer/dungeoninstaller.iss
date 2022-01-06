@@ -111,7 +111,7 @@ Source: "D:\github\DungeonStomp9\bin\soundsInstaller.dat"; DestDir: "{app}\bin";
 
 
 
-Source: "D:\github\DungeonStomp9\license.txt"; DestDir: "{app}\bin"; Flags: ignoreversion
+Source: "D:\github\DungeonStomp9\license.md"; DestDir: "{app}\bin"; Flags: ignoreversion
 Source: "D:\github\DungeonStomp9\bin\modellist.dat"; DestDir: "{app}\bin"; Flags: ignoreversion
 Source: "D:\github\DungeonStomp9\bin\monster.snd"; DestDir: "{app}\bin"; Flags: ignoreversion
 Source: "D:\github\DungeonStomp9\bin\monster1.snd"; DestDir: "{app}\bin"; Flags: ignoreversion
