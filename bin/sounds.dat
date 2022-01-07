@@ -127,4 +127,5 @@ MID	xanadu3		..\midi\xanadu3.wav
 MID	forest		..\midi\forest.wav
 MID	ocean2		..\midi\ocean2.wav
 MID	human		..\midi\human.wav
+MID	home		..\midi\home.wav
 END_FILE
