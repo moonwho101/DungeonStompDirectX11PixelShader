@@ -1141,17 +1141,7 @@ void ConvertTraingleStrip(int fan_cnt) {
 		else {
 
 
-			if (v == 0 ) {
-
-				temp_v[counter].x = src_v[i - 2].x;
-				temp_v[counter].y = src_v[i - 2].y;
-				temp_v[counter].z = src_v[i - 2].z;
-				temp_v[counter].nx = src_v[i - 2].nx;
-				temp_v[counter].ny = src_v[i - 2].ny;
-				temp_v[counter].nz = src_v[i - 2].nz;
-				temp_v[counter].tu = src_v[i - 2].tu;
-				temp_v[counter].tv = src_v[i - 2].tv;
-				counter++;
+			if (v == 0) {
 
 
 
@@ -1173,8 +1163,19 @@ void ConvertTraingleStrip(int fan_cnt) {
 				temp_v[counter].nz = src_v[i - 1].nz;
 				temp_v[counter].tu = src_v[i - 1].tu;
 				temp_v[counter].tv = src_v[i - 1].tv;
-
 				counter++;
+
+				temp_v[counter].x = src_v[i - 2].x;
+				temp_v[counter].y = src_v[i - 2].y;
+				temp_v[counter].z = src_v[i - 2].z;
+				temp_v[counter].nx = src_v[i - 2].nx;
+				temp_v[counter].ny = src_v[i - 2].ny;
+				temp_v[counter].nz = src_v[i - 2].nz;
+				temp_v[counter].tu = src_v[i - 2].tu;
+				temp_v[counter].tv = src_v[i - 2].tv;
+				counter++;
+
+
 
 				v = 1;
 			}
