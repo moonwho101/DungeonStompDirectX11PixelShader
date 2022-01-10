@@ -403,7 +403,7 @@ void MoveMonsters(float fElapsedTime)
 				{
 
 					raction = random_num(20);
-					if (monster_list[i].ability != 6)
+					if (monster_list[i].ability != 6 && monster_list[i].ability != 7)
 					{
 
 						switch (raction)
@@ -486,7 +486,7 @@ void MoveMonsters(float fElapsedTime)
 
 					if (monster_list[i].dist > 200.0f)
 					{
-						if (monster_list[i].firespeed == 0 && firetype > 0)
+						if (monster_list[i].firespeed == 0 && firetype > 0 && monster_list[i].ability !=7)
 						{
 							mspeed = (int)25 - (int)monster_list[i].hd;
 
@@ -545,7 +545,7 @@ void MoveMonsters(float fElapsedTime)
 			}
 
 
-			if (monster_list[i].ability == 6)
+			if (monster_list[i].ability == 6 || monster_list[i].ability == 7)
 			{
 				//shot only
 				skipmonster = 1;
