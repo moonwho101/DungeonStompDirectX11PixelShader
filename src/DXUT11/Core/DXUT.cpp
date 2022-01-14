@@ -799,7 +799,9 @@ void DXUTParseCommandLine(__inout WCHAR* strCommandLine,
             {
                 if( DXUTGetCmdParam( strCmdLine, strFlag ) )
                 {
-                    if (_wcsnicmp( strFlag, L"D3D_FEATURE_LEVEL_11_0", MAX_PATH) == 0 ) {
+                    if (_wcsnicmp( strFlag, L"D3D_FEATURE_LEVEL_11_1", MAX_PATH) == 0 ) {
+                        GetDXUTState().SetOverrideForceFeatureLevel(D3D_FEATURE_LEVEL_11_1);
+                    }else if (_wcsnicmp(strFlag, L"D3D_FEATURE_LEVEL_11_0", MAX_PATH) == 0) {
                         GetDXUTState().SetOverrideForceFeatureLevel(D3D_FEATURE_LEVEL_11_0);
                     }else if (_wcsnicmp( strFlag, L"D3D_FEATURE_LEVEL_10_1", MAX_PATH) == 0 ) {
                         GetDXUTState().SetOverrideForceFeatureLevel(D3D_FEATURE_LEVEL_10_1);
@@ -3488,7 +3490,8 @@ HRESULT DXUTCreate3DEnvironment11( ID3D11Device* pd3d11DeviceFromApp )
 
     ID3D11Device* pd3d11Device = NULL;
     ID3D11DeviceContext* pd3dImmediateContext = NULL;
-    D3D_FEATURE_LEVEL FeatureLevel = D3D_FEATURE_LEVEL_11_0;
+    //D3D_FEATURE_LEVEL FeatureLevel = D3D_FEATURE_LEVEL_11_0;
+    D3D_FEATURE_LEVEL FeatureLevel = D3D_FEATURE_LEVEL_11_1;
 
     IDXGISwapChain* pSwapChain = NULL;
     DXUTDeviceSettings* pNewDeviceSettings = GetDXUTState().GetCurrentDeviceSettings();

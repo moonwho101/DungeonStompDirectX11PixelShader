@@ -65,7 +65,7 @@
 #define DXUTSETTINGSDLG_STATIC_MODE_CHANGE_TIMEOUT      60
 #define DXUTSETTINGSDLG_WINDOWED_GROUP                  0x0100
 
-#define TOTAL_FEATURE_LEVLES                            6
+#define TOTAL_FEATURE_LEVLES                            7
 //--------------------------------------------------------------------------------------
 // Dialog for selection of device settings 
 // Use DXUTGetD3DSettingsDialog() to access global instance

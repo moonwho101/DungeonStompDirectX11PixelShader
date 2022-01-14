@@ -443,6 +443,7 @@ HRESULT CD3D11Enumeration::EnumerateDevices( CD3D11EnumAdapterInfo* pAdapterInfo
 
         D3D_FEATURE_LEVEL FeatureLevels[] =
         {
+                    D3D_FEATURE_LEVEL_11_1,
                     D3D_FEATURE_LEVEL_11_0,
                     D3D_FEATURE_LEVEL_10_1,
                     D3D_FEATURE_LEVEL_10_0,
