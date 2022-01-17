@@ -20,9 +20,11 @@
 
 //#define DIRECTINPUT_VERSION 0x0800
 
+//Only one input device should be true.
 BOOL g_bUseMouse = true;
 BOOL g_bUseJoystick = false;
 BOOL g_bUseKeyboard = false;
+
 
 void PlaySong();
 extern int damageinprogress;
@@ -30,6 +32,12 @@ extern char gActionMessage[2048];
 extern int musicon;
 int stopmusic = 0;
 int nextlevel = 0;
+
+extern char levelname[80];
+int ResetPlayer();
+void ClearObjectList();
+extern int ResetSound();
+extern int foundsomething = 0;
 
 int previouslevel = 0;
 int currentlevel = 1;
@@ -1214,16 +1222,15 @@ void smooth_mouse(float time_d, float realx, float realy) {
 	use_x += (realx - use_x) * d;
 	use_y += (realy - use_y) * d;
 
+	//sprintf(gActionMessage, "%9.6f %9.6f",use_x,use_y);
+	//UpdateScrollList(0, 245, 255);
+
 	filterx = use_x;
 	filtery = use_y;
 }
 
 
-extern char levelname[80];
-int ResetPlayer();
-void ClearObjectList();
-extern int ResetSound();
-extern int foundsomething = 0;
+
 
 void level() {
 
