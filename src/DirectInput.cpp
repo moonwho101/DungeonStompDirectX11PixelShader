@@ -95,7 +95,7 @@ bool cycleweaponbuttonpressed = FALSE;
 bool cycleweaponbuttonpressedjoystick = FALSE;
 
 float use_x, use_y;      // position to use for displaying
-float springiness = 5; // tweak to taste.
+float springiness = 9; // tweak to taste.
 
 void smooth_mouse(float time_d, float realx, float realy);
 
