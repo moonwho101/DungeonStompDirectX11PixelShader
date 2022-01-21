@@ -688,10 +688,7 @@ void CALLBACK OnD3D11FrameRender(ID3D11Device* pd3dDevice, ID3D11DeviceContext* 
     //pd3dImmediateContext->Draw(100*3, 0);
     //pd3dImmediateContext->DrawIndexed(936, 0, 0);
     
-    int t = FindTextureAlias("fontA");
-    pd3dImmediateContext->PSSetShaderResources(0, 1, &textures[t]);
 
-    DisplayPlayerCaption2(pd3dDevice, pd3dImmediateContext);
    
 
 
@@ -987,7 +984,10 @@ void DrawScene(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateConte
 
             //printf("Failed To Create Blend State\n");
 
+    int t = FindTextureAlias("fontA");
+    pd3dImmediateContext->PSSetShaderResources(0, 1, &textures[t]);
 
+    DisplayPlayerCaption2(pd3dDevice, pd3dImmediateContext);
 
 
     pd3dImmediateContext->OMSetBlendState(0, 0, 0xffffffff);
