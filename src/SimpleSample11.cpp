@@ -316,7 +316,8 @@ void RenderText()
     g_pTxtHelper->Begin();
     g_pTxtHelper->SetInsertionPos(5, 5);
     g_pTxtHelper->SetForegroundColor(D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f));
-    g_pTxtHelper->DrawTextLine(DXUTGetFrameStats(DXUTIsVsyncEnabled()));
+    //g_pTxtHelper->DrawTextLine(DXUTGetFrameStats(DXUTIsVsyncEnabled()));
+    g_pTxtHelper->DrawTextLine(DXUTGetFrameStats(true));
     g_pTxtHelper->DrawTextLine(DXUTGetDeviceStats());
     g_pTxtHelper->End();
 }
@@ -712,7 +713,8 @@ void CALLBACK OnD3D11FrameRender(ID3D11Device* pd3dDevice, ID3D11DeviceContext* 
     static DWORD dwTimefirst = GetTickCount();
     if (GetTickCount() - dwTimefirst > 5000)
     {
-        OutputDebugString(DXUTGetFrameStats(DXUTIsVsyncEnabled()));
+        //OutputDebugString(DXUTGetFrameStats(DXUTIsVsyncEnabled()));
+        OutputDebugString(DXUTGetFrameStats(true));
         OutputDebugString(L"\n");
         dwTimefirst = GetTickCount();
     }
