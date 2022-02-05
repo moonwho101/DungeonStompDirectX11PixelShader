@@ -388,7 +388,6 @@
     <ClInclude Include="MathHelper.h" />
     <ClInclude Include="Missle.hpp" />
     <ClInclude Include="ProcessModel.hpp" />
-    <ClInclude Include="Render9.hpp" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="WAVFileReader.h" />
     <ClInclude Include="World.hpp" />
@@ -427,7 +426,8 @@
     <ClCompile Include="MathHelper.cpp" />
     <ClCompile Include="Missle.cpp" />
     <ClCompile Include="ProcessModel.cpp" />
-    <ClCompile Include="Render9.cpp" />
+    <ClCompile Include="RenderDirectX11.cpp" />
+    <ClCompile Include="RenderDirectX9.cpp" />
     <ClCompile Include="SimpleSample11.cpp" />
     <ClCompile Include="SimpleSample9.cpp" />
     <ClCompile Include="WAVFileReader.cpp" />

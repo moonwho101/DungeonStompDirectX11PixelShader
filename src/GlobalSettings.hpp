@@ -22,7 +22,7 @@
 #define MAX_OBJECTLIST 1000
 #define MAX_OBJECTDATA 190
 
-
+#define MaxLights 21
 
 
 

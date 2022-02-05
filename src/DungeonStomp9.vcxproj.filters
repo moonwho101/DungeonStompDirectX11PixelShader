@@ -37,7 +37,6 @@
     <ClInclude Include="WAVFileReader.h" />
     <ClInclude Include="XAudio2Versions.h" />
     <ClInclude Include="Missle.hpp" />
-    <ClInclude Include="Render9.hpp" />
     <ClInclude Include="FrameMove.hpp" />
     <ClInclude Include="Dice.hpp" />
     <ClInclude Include=".\DXUT11\Core\DXUT.h">
@@ -90,7 +89,7 @@
     <ClCompile Include="WAVFileReader.cpp" />
     <ClCompile Include="XAudio2BasicSound.cpp" />
     <ClCompile Include="Missle.cpp" />
-    <ClCompile Include="Render9.cpp" />
+    <ClCompile Include="RenderDirectX9.cpp" />
     <ClCompile Include="FrameMove.cpp" />
     <ClCompile Include="Dice.cpp" />
     <ClCompile Include=".\DXUT11\Core\DXUT.cpp">
@@ -125,6 +124,7 @@
     </ClCompile>
     <ClCompile Include="LightHelper.cpp" />
     <ClCompile Include="MathHelper.cpp" />
+    <ClCompile Include="RenderDirectX11.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Manifest Include=".\DXUT11\Core\dpiaware.manifest" />

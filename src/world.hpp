@@ -411,9 +411,6 @@ typedef struct camera_float
 
 
 
-
-
-
 extern PLAYERMODELDATA* pmdata;
 
 extern int* verts_per_poly;
