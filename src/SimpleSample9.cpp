@@ -13,7 +13,7 @@
 #include "SDKmisc.h"
 #include "SDKmesh.h"
 #include "resource.h"
-#include "d3dtypes.h""
+#include "d3dtypes.h"
 #include <string.h>
 #include "LoadWorld.hpp"
 #include "world.hpp"

@@ -2,9 +2,7 @@
 #ifndef __FRAMEMOVE_H
 #define __FRAMEMOVE_H
 
-
-#include "d3dtypes.h""
-
+#include "d3dtypes.h"
 
 extern int jumpstart;
 extern int nojumpallow;
@@ -51,10 +49,8 @@ extern float jumpcount;
 extern D3DVECTOR jumpv;
 extern D3DVECTOR gravityvector;
 
-
 extern float totaldist;
 extern int gravitydropcount;
-
 
 extern D3DVECTOR EyeTrue;
 extern int lastcollide;
