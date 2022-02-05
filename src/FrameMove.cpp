@@ -28,7 +28,7 @@ void CheckAngle();
 HRESULT FrameMove(double fTime, FLOAT fTimeKey)
 {
 	float cameradist = 50.0f;
-	
+
 	GameTimers(fTimeKey);
 	CheckAngle();
 	GetItem();
@@ -37,6 +37,7 @@ HRESULT FrameMove(double fTime, FLOAT fTimeKey)
 	MovePlayer(fTimeKey);
 	StrifePlayer(fTimeKey);
 	PlayerAnimation();
+
 	savelastmove = playermove;
 	savelaststrifemove = playermovestrife;
 
@@ -60,11 +61,6 @@ HRESULT FrameMove(double fTime, FLOAT fTimeKey)
 
 	playermove = 0;
 	playermovestrife = 0;
-	
-
-	realEye.x = m_vEyePt.x + 14.0f * sinf(angy * k) * -50.0f;
-	realEye.y = m_vEyePt.y;
-	realEye.z = m_vEyePt.z + 14.0f * cosf(angy * k) * -50.0f;
 
 	EyeTrue = m_vEyePt;
 
@@ -97,13 +93,10 @@ void PlayerJump(const FLOAT& fTimeKey)
 	D3DVECTOR result;
 
 	if (gravityon == 1) {
-
 		if (jump == 1)
 		{
-
 			if (jumpvdir == 0)
 			{
-
 				jumpcount = 0.0f;
 				savevelocity.x = 0.0f;
 				savevelocity.y = (float)(400.0f) * fTimeKey;
@@ -118,7 +111,6 @@ void PlayerJump(const FLOAT& fTimeKey)
 					jumpv.y = 0.0f;
 				}
 			}
-
 		}
 
 		if (jumpstart == 1)
@@ -152,10 +144,6 @@ void PlayerJump(const FLOAT& fTimeKey)
 			savevelocity.y = -80.0f;
 
 		foundcollisiontrue = 0;
-
-		//eRadius = D3DVECTOR(spheresize, sphereheight, spheresize);
-		//result = collideWithWorld(m_vEyePt / eRadius, (savevelocity) / eRadius);
-		//result = result * eRadius;
 
 		result = collideWithWorld(RadiusDivide(m_vEyePt, eRadius), RadiusDivide(savevelocity, eRadius));
 		result = RadiusMultiply(result, eRadius);
@@ -252,7 +240,6 @@ void PlayerAnimation()
 		//		SetPlayerAnimationSequence(trueplayernum, 1);
 		//}
 	}
-
 }
 
 void StrifePlayer(FLOAT& fTimeKey)
@@ -263,8 +250,6 @@ void StrifePlayer(FLOAT& fTimeKey)
 
 	if (playermovestrife == 6)
 	{
-
-
 		step_left_angy = angy - 90;
 
 		if (step_left_angy < 0)
@@ -274,7 +259,6 @@ void StrifePlayer(FLOAT& fTimeKey)
 			step_left_angy = step_left_angy - 360;
 
 		r = (playerspeed)*fTimeKey;
-
 
 		if (addVel) {
 
@@ -287,18 +271,10 @@ void StrifePlayer(FLOAT& fTimeKey)
 			savevelocity.y = 0.0f;
 			savevelocity.z = r * cosf(step_left_angy * k);
 		}
-
-
-
-		//if (Magnitude(gvel) < maxgvel)
-		//{
-		//	gvel = gvel + savevelocity;
-		//}
 	}
 
 	if (playermovestrife == 7)
 	{
-
 		step_left_angy = angy + 90;
 
 		if (step_left_angy < 0)
@@ -322,11 +298,6 @@ void StrifePlayer(FLOAT& fTimeKey)
 			savevelocity.z = r * cosf(step_left_angy * k);
 
 		}
-
-		//if (Magnitude(gvel) < maxgvel)
-		//{
-		//	gvel = gvel + savevelocity;
-		//}
 	}
 }
 
@@ -342,7 +313,6 @@ void MovePlayer(const FLOAT& fTimeKey)
 	direction = 0;
 	if (playermove == 1)
 	{
-
 		direction = 1;
 		directionlast = 1;
 	}
@@ -353,16 +323,12 @@ void MovePlayer(const FLOAT& fTimeKey)
 		directionlast = -1;
 	}
 
-
-
 	if (movespeed < playerspeedmax && directionlast != 0)
 	{
 		addVel = true;
 
-
 		if (direction)
 		{
-
 			if (moveaccel * movetime >= playerspeedlevel)
 			{
 				movespeed = playerspeedlevel * fTimeKey;
@@ -380,7 +346,6 @@ void MovePlayer(const FLOAT& fTimeKey)
 		}
 		else
 		{
-
 			movetime = movetime - fTimeKey;
 
 			if (movetime <= 0.0)
@@ -392,7 +357,6 @@ void MovePlayer(const FLOAT& fTimeKey)
 			else
 			{
 				movespeed = moveaccel * (0.5f * movetime * movetime);
-
 				movespeedsave = movespeed;
 				movespeed = movespeed - movespeedold;
 				movespeedold = movespeedsave;
@@ -408,7 +372,6 @@ void MovePlayer(const FLOAT& fTimeKey)
 	}
 	else
 	{
-
 		movespeed = 0.0f;
 		movetime = 0.0f;
 		movespeedold = 0.0f;
@@ -424,7 +387,6 @@ void FindDoors(const FLOAT& fTimeKey)
 		if (strstr(oblist[q].name, "door") != NULL)
 		{
 			//door
-
 			float qdist = FastDistance(
 				m_vLookatPt.x - oblist[q].x,
 				m_vLookatPt.y - oblist[q].y,
@@ -436,11 +398,8 @@ void FindDoors(const FLOAT& fTimeKey)
 
 void GameTimers(const FLOAT& fTimeKey)
 {
-	//flarestart == 1 && 
 	if (maingameloop3) {
-		//CycleFlare();
 		AnimateCharacters();
-
 	}
 
 	gametimer3 = DSTimer();
@@ -482,8 +441,6 @@ void GameTimers(const FLOAT& fTimeKey)
 		maingameloop = 0;
 	}
 
-
 	fTimeKeysave = fTimeKey;
-
 	elapsegametimersave = fTimeKey;
 }

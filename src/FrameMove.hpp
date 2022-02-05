@@ -55,7 +55,7 @@ extern D3DVECTOR gravityvector;
 extern float totaldist;
 extern int gravitydropcount;
 
-extern D3DVECTOR realEye;
+
 extern D3DVECTOR EyeTrue;
 extern int lastcollide;
 extern int foundcollisiontrue;
