@@ -860,11 +860,7 @@ void DrawScene(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateConte
             }
             else if (dp_commands[currentObject] == D3DPT_TRIANGLESTRIP)
             {
-
                 int v = verts_per_poly[currentObject];
-
-                if (v > 4)
-                    int gg = 1;
 
                 primitive = (verts_per_poly[currentObject] - 2);
                 pd3dImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
