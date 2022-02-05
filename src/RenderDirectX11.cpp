@@ -18,7 +18,6 @@
 #include "Missle.hpp"
 #include "d3dutil.h"
 
-
 typedef struct Light
 {
     DirectX::XMFLOAT3 Strength = { 0.5f, 0.5f, 0.5f };
@@ -28,6 +27,8 @@ typedef struct Light
     DirectX::XMFLOAT3 Position = { 0.0f, 0.0f, 0.0f };  // point/spot light only
     float SpotPower = 64.0f;                            // spot light only
 };
+
+
 
 extern int number_of_tex_aliases;
 extern int totalcount;
@@ -42,13 +43,10 @@ extern ID3D11PixelShader* g_pPixelShaderTorch11;
 
 typedef struct Vertex {
     D3DXVECTOR3 position; // The position
-    //D3DCOLOR color;    // The color
     FLOAT nx, ny, nz;   // Normals
     FLOAT tu, tv;   // The texture coordinates
-
-    //FLOAT x, y, z; D3DXCOLOR Color;
-
 };
+
 
 Vertex mCaption[5000];
 
@@ -67,43 +65,26 @@ void display_message(float x, float y, char text[2048], int r, int g, int b, flo
     g_pTxtHelper->SetForegroundColor(D3DXCOLOR(r, g, b, 1.0f));
     g_pTxtHelper->DrawTextLine(wtext);
     g_pTxtHelper->End();
-
 }
 
 HRESULT load_texture(ID3D11Device* device, const wchar_t* filename, ID3D11ShaderResourceView** out_srv)
-
 {
-
     ID3D11Resource* new_texture;
-
     D3DX11_IMAGE_LOAD_INFO image_info;
-
     image_info.Format = DXGI_FORMAT_R8G8B8A8_TYPELESS;
 
     HRESULT hr = D3DX11CreateTextureFromFile(device, filename, &image_info, NULL, &new_texture, NULL);
-
-
-
+    
     D3D11_SHADER_RESOURCE_VIEW_DESC srv_desc;
-
     ZeroMemory(&srv_desc, sizeof(srv_desc));
-
     srv_desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
-
     srv_desc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
-
     srv_desc.Texture2D.MipLevels = 1;
-
     srv_desc.Texture2D.MostDetailedMip = 0;
-
     hr = device->CreateShaderResourceView(new_texture, &srv_desc, out_srv);
 
     return hr;
-
 }
-
-
-
 
 BOOL LoadRRTextures11(char* filename, ID3D11Device* pd3dDevice)
 {
@@ -122,7 +103,6 @@ BOOL LoadRRTextures11(char* filename, ID3D11Device* pd3dDevice)
     int i;
     BOOL start_flag = TRUE;
     BOOL found;
-    //LPDIRECTDRAWSURFACE7 lpDDsurface;
 
     if (fopen_s(&fp, filename, "r") != 0)
     {
@@ -131,16 +111,7 @@ BOOL LoadRRTextures11(char* filename, ID3D11Device* pd3dDevice)
         //return FALSE;
     }
 
-    //D3DTextr_InvalidateAllTextures();
-
-    //for (i = 0; i < MAX_NUM_TEXTURES; i++)
-        //TexMap[i].is_alpha_texture = FALSE;
-
-    //for (i = 0; i < MAX_NUM_TEXTURES; i++)
-        //lpddsImagePtr[i] = NULL;
-
-    //NumTextures = 0;
-
+    //TODO: fix this
     for (int i = 0;i < 400;i++) {
         textures[i] = NULL;
     }
@@ -331,7 +302,6 @@ BOOL LoadRRTextures11(char* filename, ID3D11Device* pd3dDevice)
         {
             //PrintMessage(hwnd, "\n", NULL, LOGFILE_ONLY);
             number_of_tex_aliases = tex_alias_counter;
-            //NumTextures = tex_counter;
             found = TRUE;
             done = 1;
         }
@@ -344,37 +314,6 @@ BOOL LoadRRTextures11(char* filename, ID3D11Device* pd3dDevice)
         }
     }
     fclose(fp);
-
-    //D3DTextr_RestoreAllTextures(GetDevice());
-    //DDCOLORKEY ckey;
-    // set color key to black, for crosshair texture.
-    // so any pixels in crosshair texture with color RGB 0,0,0 will be transparent
-    //ckey.dwColorSpaceLowValue = RGB_MAKE(0, 0, 0);
-    //ckey.dwColorSpaceHighValue = 0L;
-
-    //for (i = 0; i < NumTextures; i++)
-    //{
-    //	lpDDsurface = D3DTextr_GetSurface(ImageFile[i]);
-    //	lpddsImagePtr[i] = lpDDsurface;
-
-    //	if (strstr(ImageFile[i], "@") != NULL || strstr(ImageFile[i], "fontA") != NULL || strstr(ImageFile[i], "die") != NULL || strstr(ImageFile[i], "dungeont") != NULL || strstr(ImageFile[i], "button") != NULL || strstr(ImageFile[i], "lightmap") != NULL || strstr(ImageFile[i], "flare") != NULL || strstr(ImageFile[i], "pb8") != NULL || strstr(ImageFile[i], "pb0") != NULL || strstr(ImageFile[i], "crosshair") != NULL || strstr(ImageFile[i], "pbm") != NULL || strstr(ImageFile[i], "box1") != NULL)
-    //	{
-
-    //		if (lpddsImagePtr[i])
-    //			lpddsImagePtr[i]->SetColorKey(DDCKEY_SRCBLT, &ckey);
-    //	}
-    //	else
-    //	{
-
-    //		DDCOLORKEY ckeyfix;
-    //		ckeyfix.dwColorSpaceLowValue = RGB_MAKE(9, 99, 99);
-    //		ckeyfix.dwColorSpaceHighValue = 0L;
-
-    //		if (lpddsImagePtr[i])
-    //			lpddsImagePtr[i]->SetColorKey(DDCKEY_SRCBLT, &ckeyfix);
-    //	}
-    //}
-    //PrintMessage(hwnd, "CMyD3DApplication::LoadRRTextures - suceeded", NULL, LOGFILE_ONLY);
 
     return TRUE;
 }
@@ -452,6 +391,7 @@ void ProcessLights11()
         mMainPassCB[i + 1].Position = DirectX::XMFLOAT3{ oblist[q].x,oblist[q].y + 10.0f, oblist[q].z };
     }
 
+    //P = pointlight, M = misslelight, C = sword light S = spotlight
     //01234567890123456789
     //PPPPPPPPPPPMMMMCSSSS
 
@@ -576,11 +516,8 @@ void ProcessLights11()
 void DisplayPlayerCaption2(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateContext) {
 
     int i;
-    //LPDIRECTDRAWSURFACE7 lpDDsurface;
     float x, y, z;
-
     float pangle = 0;
-
     int countit = 0;
     int cullloop = 0;
     int cullflag = 0;
@@ -592,52 +529,17 @@ void DisplayPlayerCaption2(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dIm
     float yadjust = 0;
 
     D3DXMATRIX matWorld, matProj;
-
-    //if (showtexture == 0)
-        //return;
-
     D3DXMATRIX matRotate;
     int j = 0;
 
-    //if (menuflares == 1)
-    //{
-    //	if (lastmaterial == 0)
-    //	{
-    //		D3DMATERIAL7 mtrl;
-    //		D3DUtil_InitMaterial(mtrl, 1.0f, 1.0f, 1.0f, 1.0f);
-    //		mtrl.emissive.r = 1.0f;
-    //		mtrl.emissive.g = 1.0f;
-    //		mtrl.emissive.b = 1.0f;
-    //		lastmaterial = 1;
-    //		m_pd3dDevice->SetMaterial(&mtrl);
-    //	}
-    //}
-
-    //pd3dDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
-    //pd3dDevice->SetRenderState(D3DRS_ALPHAREF, 0x01);
-    //pd3dDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATEREQUAL);
-
-    //pd3dDevice->SetRenderState(D3DRS_ZENABLE, FALSE);
     int bground = FindTextureAlias("fontA");
-    //int bground = FindTextureAlias("die10s2");
+
     int texture_number = TexMap[bground].texture;
-
-    //pd3dDevice->SetTexture(0, g_pTextureList[texture_number]); //set texture
-
-    //lpDDsurface = lpddsImagePtr[texture_number];
-
-    //if (m_pd3dDevice->SetTexture(0, lpDDsurface) != DD_OK)
-    //	PrintMessage(NULL, "SetTexture FAILED", NULL, LOGFILE_ONLY);
-
-    //D3DVIEWPORT7 vp;
-    //m_pd3dDevice->GetViewport(&vp);
-
 
     totalcount = 0;
 
     for (j = 0; j < num_monsters; j++)
     {
-
         cullflag = 0;
         for (cullloop = 0; cullloop < monstercount; cullloop++)
         {
@@ -653,14 +555,9 @@ void DisplayPlayerCaption2(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dIm
         count = 0;
         yadjust = 0.0f;
 
-
-
         if (monster_list[j].bIsPlayerValid && cullflag == 1 && monster_list[j].bStopAnimating == FALSE)
         {
-
-
             len = strlen(monster_list[j].chatstr);
-
 
             //TODO: why?
             //if (len > 0)
@@ -700,12 +597,6 @@ void DisplayPlayerCaption2(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dIm
                 D3DXMatrixRotationY(&matRotate, (angy * k + (int)3.14));
                 D3DXMatrixMultiply(&matWorld, &matRotate, &matWorld);
 
-                //pd3dDevice->SetTransform(D3DTS_WORLD, &matWorld);
-                //countdisplay = countdisplay;
-                //g_pVB->Lock(0, sizeof(&pMonsterCaption), (void**)&pMonsterCaption, 0);
-
-
-
                 D3DXVECTOR3 collidenow;
                 D3DXVECTOR3 normroadold;
                 D3DXVECTOR3 work1, work2, vDiff, vw1, vw2;
@@ -738,18 +629,14 @@ void DisplayPlayerCaption2(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dIm
                 D3DXVECTOR3 final, final2;
                 D3DXVECTOR3 m, n;
 
-
                 D3DXVec3Normalize(&final, &vDiff);
                 D3DXVec3Normalize(&final2, &normroadold);
                 float fDot = D3DXVec3Dot(&final, &final2);
 
-
-                //float fDot = dot(final, final2);
                 float convangle;
                 convangle = (float)acos(fDot) / k;
 
                 fDot = convangle;
-
 
                 if (vw2.z < vw1.z)
                 {
@@ -765,10 +652,8 @@ void DisplayPlayerCaption2(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dIm
                     fDot = fixangle(fDot, 360.0f);
                 }
 
-
                 float cosine = cos_table[(int)fDot];
                 float sine = sin_table[(int)fDot];
-
 
                 for (i = 0; i < ((countdisplay)); i += 1)
                 {
@@ -798,14 +683,6 @@ void DisplayPlayerCaption2(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dIm
                     mCaption[i].position.z = wz + (x2 * sine + z2 * cosine);
                 }
 
-                //flag = 0;
-                //g_pVB->Unlock();
-                //totalcount = totalcount - 1;
-                //for (int i = 0; i < countdisplay; i = i + 4)
-                //{
-                    //pd3dDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, i, 2);
-                //}
-                //if (yadjust > 6) {
                 D3D11_MAPPED_SUBRESOURCE resource;
                 pd3dImmediateContext->Map(g_pcbCaptionBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &resource);
                 int s = sizeof(Vertex) * countdisplay;
@@ -817,14 +694,9 @@ void DisplayPlayerCaption2(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dIm
                 pd3dImmediateContext->IASetVertexBuffers(0, 1, &g_pcbCaptionBuffer, &stride, &offset);
                 pd3dImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
                 pd3dImmediateContext->Draw(countdisplay, 0);
-                //}
-
             }
         }
-
     }
-
-    //pd3dDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
 }
 
 
@@ -841,10 +713,7 @@ void DrawScene(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateConte
         int texture_alias_number = texture_list_buffer[i];
         int texture_number = TexMap[texture_alias_number].texture;
 
-        //pd3dImmediateContext->SetTexture(0, g_pTextureList11[texture_number]); //set texture
-
         pd3dImmediateContext->PSSetShaderResources(0, 1, &textures[texture_number]);
-        //pd3dImmediateContext->PSSetShaderResources(0, 1, &save_out_srv);
 
         if (dp_command_index_mode[i] == 1 && TexMap[texture_alias_number].is_alpha_texture == FALSE) {  //USE_NON_INDEXED_DP
             int primitive = 0;
@@ -875,21 +744,16 @@ void DrawScene(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateConte
                 int  v = verts_per_poly[currentObject];
                 pd3dImmediateContext->Draw(v, vert_index);
             }
-
         }
-
     } // end for i
 
     DrawAlpha(pd3dDevice, pd3dImmediateContext);
 
     int t = FindTextureAlias("fontA");
     pd3dImmediateContext->PSSetShaderResources(0, 1, &textures[t]);
-
     DisplayPlayerCaption2(pd3dDevice, pd3dImmediateContext);
 
     pd3dImmediateContext->OMSetBlendState(0, 0, 0xffffffff);
-
-
 }
 
 
@@ -971,8 +835,6 @@ void DrawAlpha(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateConte
                 }
             }
         }
-
-
     } // end for i
 
     //Draw Bright Torches
@@ -1055,5 +917,4 @@ void DrawAlpha(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateConte
     } // end for i
 
     SAFE_RELEASE(blendState);
-
 }
