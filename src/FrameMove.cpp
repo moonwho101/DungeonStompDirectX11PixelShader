@@ -20,8 +20,8 @@ extern int gravityon;
 void PlayerJump(const FLOAT& fTimeKey);
 void FindDoors(const FLOAT& fTimeKey);
 void GameTimers(const FLOAT& fTimeKey);
-void MovePlayer(const FLOAT& fTimeKey);
-void StrifePlayer(FLOAT& fTimeKey);
+bool MovePlayer(const FLOAT& fTimeKey);
+void StrifePlayer(FLOAT& fTimeKey, bool addVel);
 void PlayerAnimation();
 void CheckAngle();
 
@@ -34,8 +34,8 @@ HRESULT FrameMove(double fTime, FLOAT fTimeKey)
 	GetItem();
 	MonsterHit();
 	FindDoors(fTimeKey);
-	MovePlayer(fTimeKey);
-	StrifePlayer(fTimeKey);
+	bool addVel = MovePlayer(fTimeKey);
+	StrifePlayer(fTimeKey, addVel);
 	PlayerAnimation();
 
 	savelastmove = playermove;
@@ -242,11 +242,10 @@ void PlayerAnimation()
 	}
 }
 
-void StrifePlayer(FLOAT& fTimeKey)
+void StrifePlayer(FLOAT& fTimeKey, bool addVel)
 {
 	float step_left_angy = 0;
 	float r = 15.0f;
-	bool addVel = false;
 
 	if (playermovestrife == 6)
 	{
@@ -301,7 +300,7 @@ void StrifePlayer(FLOAT& fTimeKey)
 	}
 }
 
-void MovePlayer(const FLOAT& fTimeKey)
+bool MovePlayer(const FLOAT& fTimeKey)
 {
 	bool addVel = false;
 
@@ -377,6 +376,8 @@ void MovePlayer(const FLOAT& fTimeKey)
 		movespeedold = 0.0f;
 		r = 0.0f;
 	}
+
+	return addVel;
 }
 
 void FindDoors(const FLOAT& fTimeKey)
