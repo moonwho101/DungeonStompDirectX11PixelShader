@@ -895,26 +895,13 @@ void DrawScene(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateConte
 
 void DrawAlpha(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateContext) {
 
-
-    int currentObject = 0;
-
     D3D11_BLEND_DESC blendStateDesc;
     ZeroMemory(&blendStateDesc, sizeof(D3D11_BLEND_DESC));
-    //blendStateDesc.AlphaToCoverageEnable = FALSE;
-    //blendStateDesc.IndependentBlendEnable = FALSE;
-    //blendStateDesc.RenderTarget[0].BlendEnable = TRUE;
-    //blendStateDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_COLOR;
-    //blendStateDesc.RenderTarget[0].DestBlend = D3D11_BLEND_BLEND_FACTOR;
-    //blendStateDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
-    //blendStateDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
-    //blendStateDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
-    //blendStateDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
-    //blendStateDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
-
     ID3D11BlendState* blendState;
-    //printf("Failed To Create Blend State\n");
+    int currentObject = 0;
     float blendFactor[] = { 1.00f, 1.00f, 1.00f, 1.0f };
 
+    //Draw Alpha transparent
     blendStateDesc.AlphaToCoverageEnable = FALSE;
     blendStateDesc.IndependentBlendEnable = FALSE;
     blendStateDesc.RenderTarget[0].BlendEnable = TRUE;
@@ -927,7 +914,6 @@ void DrawAlpha(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateConte
     blendStateDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
     pd3dDevice->CreateBlendState(&blendStateDesc, &blendState);
-
     pd3dImmediateContext->OMSetBlendState(blendState, blendFactor, 0xffffffff);
 
     bool draw = true;
@@ -953,11 +939,7 @@ void DrawAlpha(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateConte
         }
 
         if (draw) {
-
-            //pd3dImmediateContext->SetTexture(0, g_pTextureList11[texture_number]); //set texture
-
             pd3dImmediateContext->PSSetShaderResources(0, 1, &textures[texture_number]);
-            //pd3dImmediateContext->PSSetShaderResources(0, 1, &save_out_srv);
 
             if (dp_command_index_mode[i] == 1 && TexMap[texture_alias_number].is_alpha_texture == TRUE) {  //USE_NON_INDEXED_DP
                 int primitive = 0;
@@ -973,12 +955,7 @@ void DrawAlpha(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateConte
                 }
                 else if (dp_commands[currentObject] == D3DPT_TRIANGLESTRIP)
                 {
-
                     int v = verts_per_poly[currentObject];
-
-                    if (v > 4)
-                        int gg = 1;
-
                     primitive = (verts_per_poly[currentObject] - 2);
                     pd3dImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
                     pd3dImmediateContext->Draw(v, vert_index);
@@ -998,8 +975,7 @@ void DrawAlpha(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateConte
 
     } // end for i
 
-    //Torches
-
+    //Draw Bright Torches
     blendStateDesc.AlphaToCoverageEnable = FALSE;
     blendStateDesc.IndependentBlendEnable = FALSE;
     blendStateDesc.RenderTarget[0].BlendEnable = TRUE;
@@ -1011,14 +987,12 @@ void DrawAlpha(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateConte
     blendStateDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
     blendStateDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
-
     pd3dImmediateContext->VSSetShader(g_pVertexShaderTorch11, NULL, 0);
     pd3dImmediateContext->PSSetShader(g_pPixelShaderTorch11, NULL, 0);
 
     SAFE_RELEASE(blendState);
 
     pd3dDevice->CreateBlendState(&blendStateDesc, &blendState);
-
     pd3dImmediateContext->OMSetBlendState(blendState, blendFactor, 0xffffffff);
 
     draw = true;
@@ -1045,9 +1019,7 @@ void DrawAlpha(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateConte
         }
 
         if (draw) {
-
             pd3dImmediateContext->PSSetShaderResources(0, 1, &textures[texture_number]);
-            //pd3dImmediateContext->PSSetShaderResources(0, 1, &save_out_srv);
 
             if (dp_command_index_mode[i] == 1 && TexMap[texture_alias_number].is_alpha_texture == TRUE) {  //USE_NON_INDEXED_DP
                 int primitive = 0;
