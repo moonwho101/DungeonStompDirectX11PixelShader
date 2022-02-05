@@ -46,14 +46,9 @@ Vertex v[MAX_DX11_VERT];
 void SetDungeonText();
 void DisplayHud();
 void SetDiceTexture(bool showroll);
-void DisplayPlayerCaption2(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateContext);
 void DrawScene(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateContext);
 void ProcessLights11();
 BOOL LoadRRTextures11(char* filename, ID3D11Device* pd3dDevice);
-
-//void DrawScene(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateContext);
-
-
 
 typedef struct Light
 {
@@ -102,7 +97,6 @@ ID3D11PixelShader* g_pPixelShaderTorch11 = NULL;
 ID3D11InputLayout* g_pLayout11 = NULL;
 ID3D11SamplerState* g_pSamLinear = NULL;
 
-
 //--------------------------------------------------------------------------------------
 // Constant buffers
 //--------------------------------------------------------------------------------------
@@ -148,8 +142,7 @@ extern char gActionMessage[2048];
 #define IDC_TOGGLEFULLSCREEN    1
 #define IDC_TOGGLEREF           2
 #define IDC_CHANGEDEVICE        3
-#define IDC_TEST        4
-
+#define IDC_TEST                4
 
 //--------------------------------------------------------------------------------------
 // Forward declarations 
@@ -186,7 +179,6 @@ void CALLBACK OnD3D11FrameRender(ID3D11Device* pd3dDevice, ID3D11DeviceContext* 
 void InitApp();
 void RenderText();
 HRESULT CreateDInput(HWND hWnd);
-
 
 
 //--------------------------------------------------------------------------------------
@@ -229,7 +221,6 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
     DXUTCreateWindow(L"SimpleSample11");
 
     srand(time(NULL));
-    //srand(GetTickCount());
 
     main2();
 
@@ -256,11 +247,7 @@ void InitApp()
     g_HUD.Init(&g_DialogResourceManager);
 
     g_HUDStats.Init(&g_DialogResourceManager);
-
     g_SampleUI.Init(&g_DialogResourceManager);
-
-
-
 
     g_HUD.SetCallback(OnGUIEvent);
     int iY = 30;
@@ -270,8 +257,6 @@ void InitApp()
     g_HUD.AddButton(IDC_CHANGEDEVICE, L"Change device (F2)", 0, iY += iYo, 170, 22, VK_F2);
 
     g_SampleUI.SetCallback(OnGUIEvent); iY = 10;
-
-
     g_HUDStats.SetCallback(OnGUIEvent);
     iY = 0;
     iYo = 26;
@@ -279,13 +264,6 @@ void InitApp()
 
     CDXUTButton* button = g_HUDStats.GetButton(IDC_TEST);
     CDXUTElement* elem = button->GetElement(0);  // ..or perhaps GetElement(0)
-    //elem->SetTexture(0,
-
-
-    //g_HUDStats.SetTexture()
-
-
-
 }
 
 
@@ -374,9 +352,7 @@ HRESULT CALLBACK OnD3D11CreateDevice(ID3D11Device* pd3dDevice, const DXGI_SURFAC
         pPixelShaderBuffer->GetBufferSize(), NULL, &g_pPixelShader11));
     DXUT_SetDebugName(g_pPixelShader11, "RenderScenePS");
 
-
     V_RETURN(DXUTFindDXSDKMediaFileCch(str, MAX_PATH, L"../Content/Shaders/Torch.hlsl"));
-
 
     // You should use the lowest possible shader profile for your shader to enable various feature levels. These
     // shaders are simple enough to work well within the lowest possible profile, and will run on all feature levels
@@ -396,7 +372,6 @@ HRESULT CALLBACK OnD3D11CreateDevice(ID3D11Device* pd3dDevice, const DXGI_SURFAC
     V_RETURN(pd3dDevice->CreatePixelShader(pPixelShaderTorchBuffer->GetBufferPointer(),
         pPixelShaderTorchBuffer->GetBufferSize(), NULL, &g_pPixelShaderTorch11));
     DXUT_SetDebugName(g_pPixelShaderTorch11, "RenderTorchPS");
-
 
     // Create a layout for the object data
     const D3D11_INPUT_ELEMENT_DESC layout[] =
@@ -450,13 +425,11 @@ HRESULT CALLBACK OnD3D11CreateDevice(ID3D11Device* pd3dDevice, const DXGI_SURFAC
     V_RETURN(pd3dDevice->CreateBuffer(&cbDesc, NULL, &g_pcbVSLight11));
     DXUT_SetDebugName(g_pcbVSLight11, "CB_VS_LIGHTS");
 
-
     // Create other render resources here
 
     LoadRRTextures11("textures.dat", pd3dDevice);
 
     // Create t buffers
-
     ZeroMemory(&cbDesc, sizeof(cbDesc));
     cbDesc.Usage = D3D11_USAGE_DYNAMIC;
     cbDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
@@ -465,7 +438,6 @@ HRESULT CALLBACK OnD3D11CreateDevice(ID3D11Device* pd3dDevice, const DXGI_SURFAC
     V_RETURN(pd3dDevice->CreateBuffer(&cbDesc, NULL, &g_pcbBuffer));
     DXUT_SetDebugName(g_pcbBuffer, "CB_VS_PER_FRAME");
 
-
     ZeroMemory(&cbDesc, sizeof(cbDesc));
     cbDesc.Usage = D3D11_USAGE_DYNAMIC;
     cbDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
@@ -473,8 +445,6 @@ HRESULT CALLBACK OnD3D11CreateDevice(ID3D11Device* pd3dDevice, const DXGI_SURFAC
     cbDesc.ByteWidth = sizeof(Vertex) * 5000;
     V_RETURN(pd3dDevice->CreateBuffer(&cbDesc, NULL, &g_pcbCaptionBuffer));
     DXUT_SetDebugName(g_pcbCaptionBuffer, "CB_CAPTION_PER_FRAME");
-
-
 
     // Setup the camera's view parameters
     D3DXVECTOR3 vecEye(0.0f, 0.0f, -5.0f);
@@ -578,14 +548,12 @@ void CALLBACK OnD3D11FrameRender(ID3D11Device* pd3dDevice, ID3D11DeviceContext* 
 
     ProcessLights11();
 
-
     //Vertex Buffer
     D3D11_MAPPED_SUBRESOURCE resource;
     pd3dImmediateContext->Map(g_pcbBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &resource);
     int s = sizeof(Vertex) * cnt;
     memcpy(resource.pData, v, s);
     pd3dImmediateContext->Unmap(g_pcbBuffer, 0);
-
 
     float ClearColor[4] = { 0.176f, 0.196f, 0.667f, 0.0f };
     ID3D11RenderTargetView* pRTV = DXUTGetD3D11RenderTargetView();
@@ -601,7 +569,6 @@ void CALLBACK OnD3D11FrameRender(ID3D11Device* pd3dDevice, ID3D11DeviceContext* 
     D3DXMATRIX mProj = *g_Camera.GetProjMatrix();
     D3DXMATRIX mWorldViewProjection = mWorld * mView * mProj;
 
-
     HRESULT hr;
 
     //Map world data
@@ -616,7 +583,6 @@ void CALLBACK OnD3D11FrameRender(ID3D11Device* pd3dDevice, ID3D11DeviceContext* 
     pVSPerObject->m_MaterialDiffuseColor = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
     pd3dImmediateContext->Unmap(g_pcbVSPerObject11, 0);
     pd3dImmediateContext->VSSetConstantBuffers(0, 1, &g_pcbVSPerObject11);
-
 
     //do lights
     D3D11_MAPPED_SUBRESOURCE MappedResource2;
@@ -646,10 +612,6 @@ void CALLBACK OnD3D11FrameRender(ID3D11Device* pd3dDevice, ID3D11DeviceContext* 
     pd3dImmediateContext->VSSetConstantBuffers(1, 1, &g_pcbVSPerFrame11);
     pd3dImmediateContext->PSSetConstantBuffers(1, 1, &g_pcbVSPerFrame11);
 
-
-
-
-
     // Set render resources
     pd3dImmediateContext->IASetInputLayout(g_pLayout11);
     pd3dImmediateContext->VSSetShader(g_pVertexShader11, NULL, 0);
@@ -657,7 +619,6 @@ void CALLBACK OnD3D11FrameRender(ID3D11Device* pd3dDevice, ID3D11DeviceContext* 
     pd3dImmediateContext->PSSetSamplers(0, 1, &g_pSamLinear);
 
     // Render objects here...
-
     UINT stride = sizeof(Vertex);
     UINT offset = 0;
 
@@ -665,30 +626,19 @@ void CALLBACK OnD3D11FrameRender(ID3D11Device* pd3dDevice, ID3D11DeviceContext* 
     ZeroMemory(&resourceData, sizeof(resourceData));
     pd3dImmediateContext->IASetVertexBuffers(0, 1, &g_pcbBuffer, &stride, &offset);
 
-
+    //Finally, draw everything.
     DrawScene(pd3dDevice, pd3dImmediateContext);
-
-    //pd3dImmediateContext->Draw(100*3, 0);
-    //pd3dImmediateContext->DrawIndexed(936, 0, 0);
-
-
-
-
 
     DXUT_BeginPerfEvent(DXUT_PERFEVENTCOLOR, L"HUD / Stats");
     g_HUD.OnRender(fElapsedTime);
     g_HUDStats.OnRender(fElapsedTime);
-
     g_SampleUI.OnRender(fElapsedTime);
+
     RenderText();
     DisplayHud();
     ScanMod();
     SetDiceTexture(true);
     SetDungeonText();
-
-
-
-
 
     DXUT_EndPerfEvent();
 
@@ -701,8 +651,6 @@ void CALLBACK OnD3D11FrameRender(ID3D11Device* pd3dDevice, ID3D11DeviceContext* 
         dwTimefirst = GetTickCount();
     }
 }
-
-
 
 
 //--------------------------------------------------------------------------------------
@@ -860,8 +808,6 @@ LRESULT CALLBACK MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, boo
 }
 
 
-
-
 //--------------------------------------------------------------------------------------
 // Handles the GUI events
 //--------------------------------------------------------------------------------------
@@ -880,4 +826,3 @@ void CALLBACK OnGUIEvent(UINT nEvent, int nControlID, CDXUTControl* pControl, vo
         break;
     }
 }
-

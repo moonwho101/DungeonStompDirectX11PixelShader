@@ -44,7 +44,6 @@ D3DXHANDLE                          g_hfTime;
 LPDIRECT3DTEXTURE9      g_pTexture = NULL; // Our texture
 extern LPDIRECT3DTEXTURE9      g_pTextureList[MAX_NUM_TEXTURESLIST];
 
-
 CUSTOMVERTEXTEST* pVertices;
 CUSTOMVERTEXTEST* pBoundingBox;
 CUSTOMVERTEXTEST* pMonsterCaption;
@@ -140,8 +139,6 @@ HRESULT CALLBACK OnD3D9CreateDevice(IDirect3DDevice9* pd3dDevice, const D3DSURFA
 	//	}
 	//}
 
-
-
 	//pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	pd3dDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 	pd3dDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
@@ -152,22 +149,14 @@ HRESULT CALLBACK OnD3D9CreateDevice(IDirect3DDevice9* pd3dDevice, const D3DSURFA
 	pd3dDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
 	pd3dDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
 	pd3dDevice->SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_DIFFUSE);
-
 	//pd3dDevice->SetRenderState(D3DRENDERSTATE_TEXTUREPERSPECTIVE, TRUE);
 	//pd3dDevice->SetRenderState(D3DRENDERSTATE_SPECULARENABLE, TRUE);
-
 
 	CLoadWorld* pCWorld;
 	pCWorld = new CLoadWorld();
 	if (!pCWorld->LoadRRTextures("textures.dat", pd3dDevice))
 	{
 	}
-
-	//Dungeon Stomp Main Init
-	//if (!init) {
-	//	InitDS();
-	//	init = true;
-	//}
 
 	// Create the vertex buffer.
 	if (FAILED(pd3dDevice->CreateVertexBuffer(220000 * (3 * sizeof(CUSTOMVERTEXTEST)),
@@ -185,7 +174,6 @@ HRESULT CALLBACK OnD3D9CreateDevice(IDirect3DDevice9* pd3dDevice, const D3DSURFA
 		return E_FAIL;
 	}
 
-
 	// Create the vertex buffer.
 	if (FAILED(pd3dDevice->CreateVertexBuffer(5000 * (3 * sizeof(CUSTOMVERTEXTEST)),
 		0, D3DFVF_CUSTOMVERTEX,
@@ -193,7 +181,6 @@ HRESULT CALLBACK OnD3D9CreateDevice(IDirect3DDevice9* pd3dDevice, const D3DSURFA
 	{
 		return E_FAIL;
 	}
-
 
 	HRESULT hr;
 
@@ -304,9 +291,7 @@ void CALLBACK OnD3D9FrameRender(IDirect3DDevice9* pd3dDevice, double fTime, floa
 	V(pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_ARGB(0, 45, 50, 170), 1.0f, 0));
 	//V(pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_ARGB(0, 0, 0, 0), 1.0f, 0));
 
-
 	RenderRoomUsingBlinnPhong(pd3dDevice);
-
 
 	// Render the scene
 	if (SUCCEEDED(pd3dDevice->BeginScene()))
@@ -343,7 +328,6 @@ VOID SetupMatrices(IDirect3DDevice9* pd3dDevice)
 	D3DXMATRIXA16 mView;
 	D3DXMATRIXA16 mProj;
 	D3DXMATRIXA16 mWorldViewProjection;
-
 
 	// Set up world matrix
 	D3DXMATRIXA16 matWorld;
@@ -382,8 +366,6 @@ VOID SetupMatrices(IDirect3DDevice9* pd3dDevice)
 	D3DXMatrixPerspectiveFovLH(&matProj, D3DX_PI / 4, g_AspectRation,0.1f, 50000.0f);
 	
 	pd3dDevice->SetTransform(D3DTS_PROJECTION, &matProj);
-	
-	
 
 	D3DXMATRIXA16 mTextureTransform;
 	D3DXMATRIXA16 mTrans;
@@ -392,10 +374,8 @@ VOID SetupMatrices(IDirect3DDevice9* pd3dDevice)
 	// Get the projection & view matrix from the camera class
 	mWorld = matWorld;
 	mProj = matProj;
-	
 
 	mWorldViewProjection = matView * matProj;
-
 
 	// Update the effect's variables.  Instead of using strings, it would 
 	// be more efficient to cache a handle to the parameter by calling 

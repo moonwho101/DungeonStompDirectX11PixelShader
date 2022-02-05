@@ -192,8 +192,6 @@ bool LoadShader(const char* pszFilename, LPD3DXEFFECT& pEffect, IDirect3DDevice9
 void DrawScene(IDirect3DDevice9* pd3dDevice) {
 
 	int currentObject = 0;
-
-
 	int arr[200];
 	int n, i, j;
 
@@ -201,12 +199,7 @@ void DrawScene(IDirect3DDevice9* pd3dDevice) {
 
 	ScanMod();
 	SetDiceTexture(false);
-
-
 	SetDungeonText();
-
-
-
 
 	if (maingameloop) {
 		CheckMidiMusic();
@@ -214,7 +207,6 @@ void DrawScene(IDirect3DDevice9* pd3dDevice) {
 
 	//for (i = 0; i < 100; i++)
 		//pd3dDevice->LightEnable((DWORD)i, FALSE);
-
 
 	//FlashLight(pd3dDevice);
 
@@ -245,7 +237,6 @@ void DrawScene(IDirect3DDevice9* pd3dDevice) {
 	}
 	*/
 
-
 	//D3DMATERIAL9 material;
 	//ZeroMemory(&material, sizeof(D3DMATERIAL9));
 	//material.Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
@@ -270,8 +261,6 @@ void DrawScene(IDirect3DDevice9* pd3dDevice) {
 			int texture_number = TexMap[texture_alias_number].texture;
 
 			pd3dDevice->SetTexture(0, g_pTextureList[texture_number]); //set texture
-
-
 
 			if (dp_command_index_mode[i] == 1 && TexMap[texture_alias_number].is_alpha_texture == FALSE) {  //USE_NON_INDEXED_DP
 				int primitive = 0;
@@ -351,8 +340,6 @@ void SetDungeonText()
 
 void DrawSceneAlpha(IDirect3DDevice9* pd3dDevice, bool torch)
 {
-
-
 	if (torch) {
 		SetMaterialBright(pd3dDevice);
 		pd3dDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_ONE);
@@ -366,12 +353,9 @@ void DrawSceneAlpha(IDirect3DDevice9* pd3dDevice, bool torch)
 
 	pd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 
-
 	//pd3dDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
- //   pd3dDevice->SetRenderState(D3DRS_ALPHAREF, 0x00000081);
- //   pd3dDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATEREQUAL);
-
-
+	//pd3dDevice->SetRenderState(D3DRS_ALPHAREF, 0x00000081);
+	//pd3dDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATEREQUAL);
 
 	int currentObject = 0;
 	for (currentObject = 0; currentObject < number_of_polys_per_frame; currentObject++)
@@ -386,6 +370,7 @@ void DrawSceneAlpha(IDirect3DDevice9* pd3dDevice, bool torch)
 		int texture_number = TexMap[texture_alias_number].texture;
 
 		bool draw = true;
+
 		//94-101 (95-102 in file) - Make the torch light bright
 		//289-296 - spell explode
 		//279-288 - spell shine
@@ -578,8 +563,6 @@ void DisplayHud() {
 	char jj[255];
 	sprintf(jj, "%c", char(260));
 
-
-
 	for (int i = 0;i < 8;i++) {
 
 		if (i < c) {
@@ -589,9 +572,6 @@ void DisplayHud() {
 			display_message(0.0f + 58.0f + ((FLOAT)i * 5.0f), (FLOAT)wHeight - adjust + 24.0f, jj, 255, 255, 255, 12.5, 16, 0);
 		}
 	}
-
-
-
 
 	sprintf_s(junk, "WPN : ");
 	display_message(0.0f, (FLOAT)wHeight - adjust + 38.0f, junk, 255, 255, 0, 12.5, 16, 0);
@@ -617,7 +597,6 @@ void DisplayHud() {
 		strcpy_s(junk3, "HEALING");
 		sprintf_s(junk, "%s: %d", junk3, (int)your_gun[current_gun].x_offset);
 	}
-
 	else
 	{
 		sprintf_s(junk, "%s", your_gun[current_gun].gunname);
@@ -629,10 +608,8 @@ void DisplayHud() {
 	sprintf_s(junk, "%dD%d", player_list[trueplayernum].damage1, player_list[trueplayernum].damage2);
 	display_message(0.0f + 60.0f, (FLOAT)wHeight - adjust + 52.0f, junk, 0, 245, 255, 12.5, 16, 0);
 
-
 	int attackbonus = your_gun[current_gun].sattack;
 	int damagebonus = your_gun[current_gun].sdamage;
-
 
 	sprintf_s(junk, "BNS : ");
 	display_message(0.0f, (FLOAT)wHeight - adjust + 66.0f, junk, 255, 255, 0, 12.5, 16, 0);
@@ -682,7 +659,6 @@ void DisplayHud() {
 	scount = sliststart;
 	scrollmessage1 = 14.0f * (scrolllistnum + 2);
 
-
 	while (flag)
 	{
 		sprintf_s(junk2, "%s", scrolllist1[scount].text);
@@ -700,8 +676,6 @@ void DisplayHud() {
 	}
 
 }
-
-
 
 
 void SetMaterialBright(IDirect3DDevice9* pd3dDevice)
@@ -761,14 +735,6 @@ void RenderRoomUsingBlinnPhong(IDirect3DDevice9* pd3dDevice)
 	static UINT totalPasses;
 	static D3DXHANDLE hTechnique;
 
-
-	//hTechnique = g_pBlinnPhongEffect->GetTechniqueByName("MulLights");
-
-
-	//if (FAILED(g_pBlinnPhongEffect->SetTechnique(hTechnique)))
-		//return;
-
-
 	m_TecniMulLightsHandle = g_pBlinnPhongEffectSM30->GetTechniqueByName("MulLights");
 	//Number of various light sources
 	m_NumPointLightHandle = g_pBlinnPhongEffectSM30->GetParameterByName(NULL, "g_NumPLs");
@@ -785,20 +751,13 @@ void RenderRoomUsingBlinnPhong(IDirect3DDevice9* pd3dDevice)
 	m_WVPMatrixHandle = g_pBlinnPhongEffectSM30->GetParameterByName(NULL, "WVPMatrix");//World observation projection matrix
 
 	//Set the constant handle
-		//pass in the light source data
-		// 
 	g_pBlinnPhongEffectSM30->SetRawValue(m_PointLHandle, m_PointLight, 0, sizeof(PointLight) * 10);//Transmit point light
-	//g_pBlinnPhongEffectSM30->SetRawValue(m_PointLHandle, m_PointLight, 0, sizeof(PointLight) * 2);//Transmit point light
-	//g_pBlinnPhongEffectSM30->SetRawValue(m_DirectLightHandle, m_DirectLight, 0, sizeof(DirectLight) * 1);//Direction light
 	g_pBlinnPhongEffectSM30->SetRawValue(m_SpotLightHandle, m_SpotLight, 0, sizeof(SpotLight) * 8);//Spotlight
 
 	g_pBlinnPhongEffectSM30->SetFloat(m_AmbAmountHandle, 0.0f);
 	g_pBlinnPhongEffectSM30->SetInt(m_NumPointLightHandle, 10);//Number of point light sources: 2 (Adjusting the number can facilitate debugging)
 	g_pBlinnPhongEffectSM30->SetInt(m_NumDirectLightHandle, 0);//Number of directional lights: 1
 	g_pBlinnPhongEffectSM30->SetInt(m_NumSpotLightHandle, 8);//Number of spotlights: 1
-
-
-
 }
 
 
@@ -810,81 +769,16 @@ extern D3DXMATRIXA16 g_matView;
 
 void UpdateEffects(IDirect3DDevice9* pd3dDevice)
 {
-
-	//m_NLightEffect->SetVector(m_ViewPosHandle, &effectcamera);
-	//m_NLightEffect->SetVector(m_ViewPosHandle, &effectcamera);
-	//m_NLightEffect->SetVector(m_ViewPosHandle, &effectcamera);
-
-
-
 	g_pBlinnPhongEffectSM30->SetMatrix(m_WorldMatrixHandle, &effectidentity); //mWorld
 	g_pBlinnPhongEffectSM30->SetMatrix(m_WVPMatrixHandle, &effectcamera);
 	g_pBlinnPhongEffectSM30->SetMatrix(m_ViewPosHandle, &g_matView);
 	g_pBlinnPhongEffectSM30->SetRawValue(m_PointLHandle, m_PointLight, 0, sizeof(PointLight) * 10);//Transmit point light
 	g_pBlinnPhongEffectSM30->SetRawValue(m_SpotLightHandle, m_SpotLight, 0, sizeof(SpotLight) * 8);
-
-	/*
-
-	ID3DXEffect* pEffect = g_pBlinnPhongEffect;
-
-	// Set the matrices for the shader.
-		// Set the matrices for the shader.
-
-
-	pEffect->SetMatrix((UINT_PTR)"worldMatrix", &effectidentity);
-	pEffect->SetMatrix((UINT_PTR)"worldInverseTransposeMatrix", &effectidentity);
-	pEffect->SetMatrix((UINT_PTR)"worldViewProjectionMatrix", &effectcamera);
-
-	// Set the camera position.
-	D3DXVECTOR3 e = D3DXVECTOR3(m_vEyePt.x, m_vEyePt.y, m_vEyePt.z);
-	HRESULT hr = pEffect->SetValue((UINT_PTR)"cameraPos", e, sizeof(e));
-
-
-	//pEffect->SetValue((UINT_PTR)"globalAmbient", &g_sceneAmbient, sizeof(g_sceneAmbient));
-
-	// Set the number of active lights. For shader model 3.0 only.
-
-	if (pEffect == g_pBlinnPhongEffectSM30)
-		pEffect->SetValue((UINT_PTR)"numLights", &g_numLights, sizeof(g_numLights));
-
-	// Set the lighting parameters for the shader.
-
-	const PointLight* pLight = 0;
-	D3DXHANDLE hLight;
-	D3DXHANDLE hLightPos;
-	D3DXHANDLE hLightAmbient;
-	D3DXHANDLE hLightDiffuse;
-	D3DXHANDLE hLightSpecular;
-	D3DXHANDLE hLightRadius;
-
-	for (int i = 0; i < g_numLights; ++i)
-	{
-		pLight = &g_lights[i];
-		hLight = pEffect->GetParameterElement((UINT_PTR)"lights", i);
-
-		hLightPos = pEffect->GetParameterByName(hLight, "pos");
-		hLightAmbient = pEffect->GetParameterByName(hLight, "ambient");
-		hLightDiffuse = pEffect->GetParameterByName(hLight, "diffuse");
-		hLightSpecular = pEffect->GetParameterByName(hLight, "specular");
-		hLightRadius = pEffect->GetParameterByName(hLight, "radius");
-
-		pEffect->SetValue(hLightPos, pLight->pos, sizeof(pLight->pos));
-		pEffect->SetValue(hLightAmbient, pLight->ambient, sizeof(pLight->ambient));
-		pEffect->SetValue(hLightDiffuse, pLight->diffuse, sizeof(pLight->diffuse));
-		pEffect->SetValue(hLightSpecular, pLight->specular, sizeof(pLight->specular));
-		pEffect->SetFloat(hLightRadius, pLight->radius);
-	}
-	*/
 }
-
 
 
 void InitShaderApp(IDirect3DDevice9* pd3dDevice)
 {
-
-
-
-
 	if (!LoadShader("../Content/Shaders/nlight_sm30.fx", g_pBlinnPhongEffectSM30, pd3dDevice)) {
 		//	throw std::runtime_error("Failed to load shader: blinn_phong_sm30.fx.");
 
@@ -892,12 +786,8 @@ void InitShaderApp(IDirect3DDevice9* pd3dDevice)
 	}
 	g_numLights = MAX_LIGHTS_SM30;
 
-
 	// Seed the random number generator.
 	srand(GetTickCount());
-
-
-	//m_PointLight [0]
 
 	for (int i = 0; i < 10; ++i) {
 		m_PointLight[i].Diffuse = { 1.0f, 1.0f, 1.0f, 1.0f };//Diffuse
@@ -925,9 +815,6 @@ void InitShaderApp(IDirect3DDevice9* pd3dDevice)
 	//m_SpotLight[i].FalloffThetaPhi = { 3.5f, 0.0f, 0.04f, 1.00f };//Attenuation,-, inner angle (half angle in radians), outer angle (half angle in radians)
 	//m_SpotLight[i].RangeAttenuation = { 800.0f, 0.0f, 10.0f, 0.0f };//Range, attenuation 1, highlight, attenuation 2
 
-
-
-
 	//m_PointLight[7].RangeAttenuation = { 200.0f, 0.0f, 950.0f, 0.0f };  //x = radius z=speculaor
 
 	// Initialize the point lights in the scene.
@@ -939,7 +826,6 @@ void InitShaderApp(IDirect3DDevice9* pd3dDevice)
 
 void ProcessLights()
 {
-
 	int sort[200];
 	float dist[200];
 	int obj[200];
@@ -956,8 +842,6 @@ void ProcessLights()
 		m_SpotLight[i].Position[1] = 9000;
 		m_SpotLight[i].Position[2] = 9000;
 	}
-
-
 
 	int dcount = 0;
 	//Find lights
@@ -977,7 +861,6 @@ void ProcessLights()
 		}
 
 	}
-
 
 	//sorting - ASCENDING ORDER
 	for (int i = 0;i < dcount;i++)
@@ -1015,9 +898,6 @@ void ProcessLights()
 
 	int count = 0;
 
-
-
-	//AddMissleLight(pd3dDevice);
 	for (int misslecount = 0; misslecount < MAX_MISSLE; misslecount++)
 	{
 		if (your_missle[misslecount].active == 1)
@@ -1039,13 +919,10 @@ void ProcessLights()
 					m_PointLight[8 + count].Diffuse = { 1.0f, 1.0f, 1.0f, 1.0f };
 					m_PointLight[8 + count].Specular = { 1.0f, 1.0f, 1.0f, 1.0f };
 				}
-
-
 				count++;
 			}
 		}
 	}
-
 
 	bool flamesword = false;
 
@@ -1055,7 +932,6 @@ void ProcessLights()
 	{
 		flamesword = true;
 	}
-
 
 	if (flamesword) {
 
@@ -1103,7 +979,6 @@ void ProcessLights()
 
 	}
 
-
 	//sorting - ASCENDING ORDER
 	for (int i = 0;i < dcount;i++)
 	{
@@ -1130,8 +1005,6 @@ void ProcessLights()
 		int angle = (int)oblist[q].rot_angle;
 		int ob_type = oblist[q].type;
 
-		//AddWorldLight(ob_type, angle, q, pd3dDevice);
-
 		m_SpotLight[i].Position[0] = oblist[q].x;
 		m_SpotLight[i].Position[1] = oblist[q].y;
 		m_SpotLight[i].Position[2] = oblist[q].z;
@@ -1147,8 +1020,6 @@ void ProcessLights()
 		m_SpotLight[7].Diffuse = { 0.5f, 0.0f, 0.0f, 1.0f };
 		m_SpotLight[7].Specular = { 0.0f, 0.0f, 1.0f, 1.0f };
 	}
-
-
 }
 
 
@@ -1809,45 +1680,13 @@ void DisplayPlayerCaption(IDirect3DDevice9* pd3dDevice) {
 	float yadjust = 0;
 
 	D3DXMATRIX matWorld, matProj;
-
-	//if (showtexture == 0)
-		//return;
-
 	D3DXMATRIX matRotate;
 	int j = 0;
 
-	//if (menuflares == 1)
-	//{
-	//	if (lastmaterial == 0)
-	//	{
-	//		D3DMATERIAL7 mtrl;
-	//		D3DUtil_InitMaterial(mtrl, 1.0f, 1.0f, 1.0f, 1.0f);
-	//		mtrl.emissive.r = 1.0f;
-	//		mtrl.emissive.g = 1.0f;
-	//		mtrl.emissive.b = 1.0f;
-	//		lastmaterial = 1;
-	//		m_pd3dDevice->SetMaterial(&mtrl);
-	//	}
-	//}
-
-	//pd3dDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
-	//pd3dDevice->SetRenderState(D3DRS_ALPHAREF, 0x01);
-	//pd3dDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATEREQUAL);
-
-	//pd3dDevice->SetRenderState(D3DRS_ZENABLE, FALSE);
 	int bground = FindTextureAlias("fontA");
-	//int bground = FindTextureAlias("die10s2");
 	int texture_number = TexMap[bground].texture;
 
 	pd3dDevice->SetTexture(0, g_pTextureList[texture_number]); //set texture
-
-	//lpDDsurface = lpddsImagePtr[texture_number];
-
-	//if (m_pd3dDevice->SetTexture(0, lpDDsurface) != DD_OK)
-	//	PrintMessage(NULL, "SetTexture FAILED", NULL, LOGFILE_ONLY);
-
-	//D3DVIEWPORT7 vp;
-	//m_pd3dDevice->GetViewport(&vp);
 
 	for (j = 0; j < num_monsters; j++)
 	{
@@ -1929,8 +1768,6 @@ void DisplayPlayerCaption(IDirect3DDevice9* pd3dDevice) {
 				}
 			}
 		}
-
 	}
 
-	//pd3dDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
 }
