@@ -130,6 +130,13 @@ ID3D11Buffer* g_pcbBuffer = NULL;
 ID3D11Buffer* g_pcbCaptionBuffer = NULL;
 
 HRESULT FrameMove(double fTime, FLOAT fTimeKey);
+void CheckAngle();
+void PlayerJump(const FLOAT& fTimeKey, D3DVECTOR& result);
+void PlayerAnimation();
+void StrifePlayer(float& step_left_angy, float& r, const FLOAT& fTimeKey, bool addVel);
+void MovePlayer(float& r, const FLOAT& fTimeKey, bool& addVel);
+void FindDoors(const FLOAT& fTimeKey);
+void GameTimers(const FLOAT& fTimeKey);
 VOID UpdateControls();
 
 int main2();
