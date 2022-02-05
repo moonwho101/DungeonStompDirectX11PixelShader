@@ -6,7 +6,7 @@
 #include "SDKmisc.h"
 #include "SDKmesh.h"
 #include "resource.h"
-#include "d3dtypes.h""
+#include "d3dtypes.h"
 #include "LoadWorld.hpp"
 #include "world.hpp"
 #include "GlobalSettings.hpp"
@@ -578,7 +578,7 @@ void DisplayHud() {
 	char jj[255];
 	sprintf(jj, "%c", char(260));
 
-	
+
 
 	for (int i = 0;i < 8;i++) {
 
