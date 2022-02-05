@@ -54,7 +54,7 @@ Vertex mCaption[5000];
 
 extern ID3D11ShaderResourceView* textures[400];
 
-
+void DrawAlpha(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateContext);
 void display_font(float x, float y, char text[1000], int r, int g, int b);
 
 void display_message(float x, float y, char text[2048], int r, int g, int b, float fontx, float fonty, int fonttype) {
@@ -830,9 +830,6 @@ void DisplayPlayerCaption2(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dIm
 
 void DrawScene(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateContext) {
 
-
-
-
     int currentObject = 0;
     for (currentObject = 0; currentObject < number_of_polys_per_frame; currentObject++)
     {
@@ -887,8 +884,23 @@ void DrawScene(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateConte
 
     } // end for i
 
+    DrawAlpha(pd3dDevice, pd3dImmediateContext);
+
+    int t = FindTextureAlias("fontA");
+    pd3dImmediateContext->PSSetShaderResources(0, 1, &textures[t]);
+
+    DisplayPlayerCaption2(pd3dDevice, pd3dImmediateContext);
+
+    pd3dImmediateContext->OMSetBlendState(0, 0, 0xffffffff);
 
 
+}
+
+
+void DrawAlpha(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateContext) {
+
+
+    int currentObject = 0;
 
     D3D11_BLEND_DESC blendStateDesc;
     ZeroMemory(&blendStateDesc, sizeof(D3D11_BLEND_DESC));
@@ -906,7 +918,6 @@ void DrawScene(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateConte
     ID3D11BlendState* blendState;
     //printf("Failed To Create Blend State\n");
     float blendFactor[] = { 1.00f, 1.00f, 1.00f, 1.0f };
-
 
     blendStateDesc.AlphaToCoverageEnable = FALSE;
     blendStateDesc.IndependentBlendEnable = FALSE;
@@ -991,7 +1002,7 @@ void DrawScene(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateConte
 
     } // end for i
 
-
+    //Torches
 
     blendStateDesc.AlphaToCoverageEnable = FALSE;
     blendStateDesc.IndependentBlendEnable = FALSE;
@@ -1005,18 +1016,12 @@ void DrawScene(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateConte
     blendStateDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
 
-
-
-
-
     pd3dImmediateContext->VSSetShader(g_pVertexShaderTorch11, NULL, 0);
     pd3dImmediateContext->PSSetShader(g_pPixelShaderTorch11, NULL, 0);
 
     SAFE_RELEASE(blendState);
 
     pd3dDevice->CreateBlendState(&blendStateDesc, &blendState);
-
-
 
     pd3dImmediateContext->OMSetBlendState(blendState, blendFactor, 0xffffffff);
 
@@ -1045,8 +1050,6 @@ void DrawScene(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateConte
 
         if (draw) {
 
-            //pd3dImmediateContext->SetTexture(0, g_pTextureList11[texture_number]); //set texture
-
             pd3dImmediateContext->PSSetShaderResources(0, 1, &textures[texture_number]);
             //pd3dImmediateContext->PSSetShaderResources(0, 1, &save_out_srv);
 
@@ -1064,11 +1067,7 @@ void DrawScene(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateConte
                 }
                 else if (dp_commands[currentObject] == D3DPT_TRIANGLESTRIP)
                 {
-
                     int v = verts_per_poly[currentObject];
-
-                    if (v > 4)
-                        int gg = 1;
 
                     primitive = (verts_per_poly[currentObject] - 2);
                     pd3dImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
@@ -1085,24 +1084,7 @@ void DrawScene(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateConte
                 }
             }
         }
-
-
     } // end for i
-
-
-
-            //printf("Failed To Create Blend State\n");
-
-    int t = FindTextureAlias("fontA");
-    pd3dImmediateContext->PSSetShaderResources(0, 1, &textures[t]);
-
-    DisplayPlayerCaption2(pd3dDevice, pd3dImmediateContext);
-
-
-    pd3dImmediateContext->OMSetBlendState(0, 0, 0xffffffff);
-    //pd3dImmediateContext->OMSetBlendState(blendState, NULL, 0xffffffff);
-
-
 
     SAFE_RELEASE(blendState);
 
