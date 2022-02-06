@@ -28,7 +28,7 @@
     <ClInclude Include="ImportMD2.hpp" />
     <ClInclude Include="Import3DS.hpp" />
     <ClInclude Include="ProcessModel.hpp" />
-    <ClInclude Include="DIrectInput.hpp" />
+    <ClInclude Include="DirectInput.hpp" />
     <ClInclude Include="GameLogic.hpp" />
     <ClInclude Include="Collision.hpp" />
     <ClInclude Include="col_local.h" />

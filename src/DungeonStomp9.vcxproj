@@ -377,7 +377,7 @@
     <ClInclude Include="col_local.h" />
     <ClInclude Include="d3dutil.h" />
     <ClInclude Include="Dice.hpp" />
-    <ClInclude Include="DIrectInput.hpp" />
+    <ClInclude Include="DirectInput.hpp" />
     <ClInclude Include="FrameMove.hpp" />
     <ClInclude Include="GameLogic.hpp" />
     <ClInclude Include="GlobalSettings.hpp" />
