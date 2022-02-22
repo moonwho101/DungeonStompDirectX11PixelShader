@@ -50,6 +50,7 @@ Vertex mCaption[5000];
 extern ID3D11ShaderResourceView* textures[400];
 
 void DrawAlpha(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateContext);
+void Draw(int currentObject, ID3D11DeviceContext* pd3dImmediateContext, int vert_index);
 void display_font(float x, float y, char text[1000], int r, int g, int b);
 void DisplayPlayerCaption2(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateContext);
 
@@ -70,34 +71,7 @@ void DrawScene(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateConte
         pd3dImmediateContext->PSSetShaderResources(0, 1, &textures[texture_number]);
 
         if (dp_command_index_mode[i] == 1 && TexMap[texture_alias_number].is_alpha_texture == FALSE) {  //USE_NON_INDEXED_DP
-            int primitive = 0;
-
-            if (dp_commands[currentObject] == D3DPT_TRIANGLEFAN)
-            {
-                //no longer needed
-                int v = verts_per_poly[currentObject];
-
-                primitive = (verts_per_poly[currentObject] - 2);
-                pd3dImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-
-            }
-            else if (dp_commands[currentObject] == D3DPT_TRIANGLESTRIP)
-            {
-                int v = verts_per_poly[currentObject];
-
-                primitive = (verts_per_poly[currentObject] - 2);
-                pd3dImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-                pd3dImmediateContext->Draw(v, vert_index);
-            }
-            else if (dp_commands[currentObject] == D3DPT_TRIANGLELIST)
-            {
-                primitive = verts_per_poly[currentObject] / 3;
-                pd3dImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-                //This is good
-                int  v = verts_per_poly[currentObject];
-                pd3dImmediateContext->Draw(v, vert_index);
-            }
+            Draw(currentObject, pd3dImmediateContext, vert_index);
         }
     } // end for i
 
@@ -160,33 +134,7 @@ void DrawAlpha(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateConte
             pd3dImmediateContext->PSSetShaderResources(0, 1, &textures[texture_number]);
 
             if (dp_command_index_mode[i] == 1 && TexMap[texture_alias_number].is_alpha_texture == TRUE) {  //USE_NON_INDEXED_DP
-                int primitive = 0;
-
-                if (dp_commands[currentObject] == D3DPT_TRIANGLEFAN)
-                {
-                    //no longer needed
-                    int v = verts_per_poly[currentObject];
-
-                    primitive = (verts_per_poly[currentObject] - 2);
-                    pd3dImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-
-                }
-                else if (dp_commands[currentObject] == D3DPT_TRIANGLESTRIP)
-                {
-                    int v = verts_per_poly[currentObject];
-                    primitive = (verts_per_poly[currentObject] - 2);
-                    pd3dImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-                    pd3dImmediateContext->Draw(v, vert_index);
-                }
-                else if (dp_commands[currentObject] == D3DPT_TRIANGLELIST)
-                {
-                    primitive = verts_per_poly[currentObject] / 3;
-                    pd3dImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-                    //This is good
-                    int  v = verts_per_poly[currentObject];
-                    pd3dImmediateContext->Draw(v, vert_index);
-                }
+                Draw(currentObject, pd3dImmediateContext, vert_index);
             }
         }
     } // end for i
@@ -238,34 +186,7 @@ void DrawAlpha(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateConte
             pd3dImmediateContext->PSSetShaderResources(0, 1, &textures[texture_number]);
 
             if (dp_command_index_mode[i] == 1 && TexMap[texture_alias_number].is_alpha_texture == TRUE) {  //USE_NON_INDEXED_DP
-                int primitive = 0;
-
-                if (dp_commands[currentObject] == D3DPT_TRIANGLEFAN)
-                {
-                    //no longer needed
-                    int v = verts_per_poly[currentObject];
-
-                    primitive = (verts_per_poly[currentObject] - 2);
-                    pd3dImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-
-                }
-                else if (dp_commands[currentObject] == D3DPT_TRIANGLESTRIP)
-                {
-                    int v = verts_per_poly[currentObject];
-
-                    primitive = (verts_per_poly[currentObject] - 2);
-                    pd3dImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-                    pd3dImmediateContext->Draw(v, vert_index);
-                }
-                else if (dp_commands[currentObject] == D3DPT_TRIANGLELIST)
-                {
-                    primitive = verts_per_poly[currentObject] / 3;
-                    pd3dImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-                    //This is good
-                    int  v = verts_per_poly[currentObject];
-                    pd3dImmediateContext->Draw(v, vert_index);
-                }
+                Draw(currentObject, pd3dImmediateContext, vert_index);
             }
         }
     } // end for i
@@ -273,6 +194,36 @@ void DrawAlpha(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateConte
     SAFE_RELEASE(blendState);
 }
 
+void Draw(int currentObject, ID3D11DeviceContext* pd3dImmediateContext, int vert_index)
+{
+    int primitive = 0;
+
+    if (dp_commands[currentObject] == D3DPT_TRIANGLEFAN)
+    {
+        //no longer needed
+        int v = verts_per_poly[currentObject];
+
+        primitive = (verts_per_poly[currentObject] - 2);
+        pd3dImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+
+    }
+    else if (dp_commands[currentObject] == D3DPT_TRIANGLESTRIP)
+    {
+        int v = verts_per_poly[currentObject];
+        primitive = (verts_per_poly[currentObject] - 2);
+        pd3dImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+        pd3dImmediateContext->Draw(v, vert_index);
+    }
+    else if (dp_commands[currentObject] == D3DPT_TRIANGLELIST)
+    {
+        primitive = verts_per_poly[currentObject] / 3;
+        pd3dImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+        //This is good
+        int  v = verts_per_poly[currentObject];
+        pd3dImmediateContext->Draw(v, vert_index);
+    }
+}
 
 void display_message(float x, float y, char text[2048], int r, int g, int b, float fontx, float fonty, int fonttype) {
 
