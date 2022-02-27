@@ -16,7 +16,7 @@ It will compile using Microsoft Visual Studio 2019 community edition.
 * Confirm VC++ LIB directory has .\Lib\x64
 
 ## Contact
-If you have any questions email me at info@aptisense.com or visit www.aptisense.com to download game installer.
+If you have any questions email me at mlongo@aptisense.com or visit www.aptisense.com to download game installer.
 Happy Dungeon Stomping - Breeyark!
 
 ## MD2 Models
