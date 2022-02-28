@@ -73,12 +73,11 @@ void DrawScene(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateConte
         if (dp_command_index_mode[i] == 1 && TexMap[texture_alias_number].is_alpha_texture == FALSE) {  //USE_NON_INDEXED_DP
             Draw(currentObject, pd3dImmediateContext, vert_index);
         }
-    } // end for i
+    }
 
     DrawAlpha(pd3dDevice, pd3dImmediateContext);
 
-    int t = FindTextureAlias("fontA");
-    pd3dImmediateContext->PSSetShaderResources(0, 1, &textures[t]);
+
     DisplayPlayerCaption2(pd3dDevice, pd3dImmediateContext);
 
     pd3dImmediateContext->OMSetBlendState(0, 0, 0xffffffff);
@@ -131,13 +130,12 @@ void DrawAlpha(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateConte
         }
 
         if (draw) {
-            pd3dImmediateContext->PSSetShaderResources(0, 1, &textures[texture_number]);
-
             if (dp_command_index_mode[i] == 1 && TexMap[texture_alias_number].is_alpha_texture == TRUE) {  //USE_NON_INDEXED_DP
+                pd3dImmediateContext->PSSetShaderResources(0, 1, &textures[texture_number]);
                 Draw(currentObject, pd3dImmediateContext, vert_index);
             }
         }
-    } // end for i
+    } 
 
     //Draw Bright Torches
     blendStateDesc.AlphaToCoverageEnable = FALSE;
@@ -688,9 +686,9 @@ void DisplayPlayerCaption2(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dIm
     D3DXMATRIX matRotate;
     int j = 0;
 
-    int bground = FindTextureAlias("fontA");
-
-    int texture_number = TexMap[bground].texture;
+    //Load the font texture
+    int t = FindTextureAlias("fontA");
+    pd3dImmediateContext->PSSetShaderResources(0, 1, &textures[t]);
 
     totalcount = 0;
 
@@ -821,7 +819,6 @@ void DisplayPlayerCaption2(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dIm
 
                     totalcount++;
                 }
-
 
                 for (i = 0; i < ((countdisplay)); i += 1)
                 {
