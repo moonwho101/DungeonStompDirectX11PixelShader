@@ -178,9 +178,8 @@ void DrawAlpha(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateConte
         }
 
         if (draw) {
-            pd3dImmediateContext->PSSetShaderResources(0, 1, &textures[texture_number]);
-
             if (dp_command_index_mode[i] == 1 && TexMap[texture_alias_number].is_alpha_texture == TRUE) {  //USE_NON_INDEXED_DP
+                pd3dImmediateContext->PSSetShaderResources(0, 1, &textures[texture_number]);
                 Draw(currentObject, pd3dImmediateContext, vert_index);
             }
         }
