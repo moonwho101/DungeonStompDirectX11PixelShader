@@ -23,16 +23,16 @@ Happy Dungeon Stomping - Breeyark!
 
 * WSAD to move, E to JUMP
 * SPACE to open doors.
-* Q/Z to cycle weapons
+* Q/Z to cycle weapons/spells
 * MOUSE Left button = attack, MOUSE Right button move forward
 
 ## Debug Controls
 
-* G - toggle gravity (+/- move up, move down)
+* G - Toggle gravity (+/- move up, move down)
 * I - Disable music
 * P - Random music
 * X - Give experience points
-* K - Give all weapons
+* K - Give all weapons and spells
 
 ## MD2 Models
 Dungeon Stomp would not have been possible without the amazing MD2 models made by the following authors:
