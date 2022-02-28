@@ -196,31 +196,17 @@ void DrawAlpha(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateConte
 
 void Draw(int currentObject, ID3D11DeviceContext* pd3dImmediateContext, int vert_index)
 {
-    int primitive = 0;
+    int  v = verts_per_poly[currentObject];
 
-    if (dp_commands[currentObject] == D3DPT_TRIANGLEFAN)
+    if (dp_commands[currentObject] == D3DPT_TRIANGLESTRIP)
     {
-        //no longer needed
-        int v = verts_per_poly[currentObject];
-
-        primitive = (verts_per_poly[currentObject] - 2);
-        pd3dImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-
-    }
-    else if (dp_commands[currentObject] == D3DPT_TRIANGLESTRIP)
-    {
-        int v = verts_per_poly[currentObject];
-        primitive = (verts_per_poly[currentObject] - 2);
         pd3dImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
         pd3dImmediateContext->Draw(v, vert_index);
     }
     else if (dp_commands[currentObject] == D3DPT_TRIANGLELIST)
     {
-        primitive = verts_per_poly[currentObject] / 3;
         pd3dImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
         //This is good
-        int  v = verts_per_poly[currentObject];
         pd3dImmediateContext->Draw(v, vert_index);
     }
 }
