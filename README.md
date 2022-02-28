@@ -19,6 +19,21 @@ It will compile using Microsoft Visual Studio 2019 community edition.
 If you have any questions email me at mlongo@aptisense.com or visit www.aptisense.com to download game installer.
 Happy Dungeon Stomping - Breeyark!
 
+## Controls
+
+* WSAD to move, E to JUMP
+* SPACE to open doors.
+* Q/Z to cycle weapons
+* MOUSE Left button = attack, MOUSE Right button move forward
+
+## Debug Controls
+
+* G - toggle gravity (+/- move up, move down)
+* I - Disable music
+* P - Random music
+* X - Give experience points
+* K - Give all weapons
+
 ## MD2 Models
 Dungeon Stomp would not have been possible without the amazing MD2 models made by the following authors:
 
