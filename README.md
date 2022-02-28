@@ -33,6 +33,8 @@ Happy Dungeon Stomping - Breeyark!
 * P - Random music
 * X - Give experience points
 * K - Give all weapons and spells
+* ] = Next Dungeon Level
+* [ = Previous Dungeon Level
 
 ## MD2 Models
 Dungeon Stomp would not have been possible without the amazing MD2 models made by the following authors:
