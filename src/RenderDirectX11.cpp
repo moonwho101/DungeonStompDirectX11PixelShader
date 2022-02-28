@@ -76,10 +76,7 @@ void DrawScene(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateConte
     }
 
     DrawAlpha(pd3dDevice, pd3dImmediateContext);
-
-
     DisplayPlayerCaption2(pd3dDevice, pd3dImmediateContext);
-
     pd3dImmediateContext->OMSetBlendState(0, 0, 0xffffffff);
 }
 
@@ -204,7 +201,6 @@ void Draw(int currentObject, ID3D11DeviceContext* pd3dImmediateContext, int vert
     else if (dp_commands[currentObject] == D3DPT_TRIANGLELIST)
     {
         pd3dImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-        //This is good
         pd3dImmediateContext->Draw(v, vert_index);
     }
 }
