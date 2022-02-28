@@ -68,9 +68,8 @@ void DrawScene(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3dImmediateConte
         int texture_alias_number = texture_list_buffer[i];
         int texture_number = TexMap[texture_alias_number].texture;
 
-        pd3dImmediateContext->PSSetShaderResources(0, 1, &textures[texture_number]);
-
         if (dp_command_index_mode[i] == 1 && TexMap[texture_alias_number].is_alpha_texture == FALSE) {  //USE_NON_INDEXED_DP
+            pd3dImmediateContext->PSSetShaderResources(0, 1, &textures[texture_number]);
             Draw(currentObject, pd3dImmediateContext, vert_index);
         }
     }
