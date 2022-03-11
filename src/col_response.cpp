@@ -191,6 +191,15 @@ D3DXVECTOR3 collideWithWorld(D3DXVECTOR3 position, D3DXVECTOR3 velocity)
 
 	factor = veryCloseDistance / (V.x * slidePlaneNormal.x + V.y * slidePlaneNormal.y + V.z * slidePlaneNormal.z);
 
+	//Protect against errors
+	if (isnan(factor)) {
+		final.x = pos.x;
+		final.y = pos.y;
+		final.z = pos.z;
+		collisionRecursionDepth = 0;
+		return final;
+	}
+
 	//VECTOR V2;
 	//V2.SetLength(1);
 	//V=V2;
