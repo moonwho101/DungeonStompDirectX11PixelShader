@@ -5,6 +5,7 @@
 ## Newer Versions
 * Dungeon Stomp for DirectX12 is here https://github.com/moonwho101/DungeonStompDirectX12
 
+## Dungeon Stomp DirectX11
 Dungeon Stomp DirectX11 with Vertex and Pixel shaders (blinn-phong).
 
 * Dungeon Stomp is a DirectX11 3D dungeon game that uses Direct3D, DirectInput and XAudio2.
@@ -24,14 +25,12 @@ If you have any questions email me at mlongo@aptisense.com or visit www.aptisens
 Happy Dungeon Stomping - Breeyark!
 
 ## Controls
-
 * WSAD to move, E to JUMP
 * SPACE to open doors.
 * Q/Z to cycle weapons/spells
 * MOUSE Left button = attack, MOUSE Right button move forward
 
 ## Debug Controls
-
 * G - Toggle gravity (+/- move up, move down)
 * I - Disable music
 * P - Random music
