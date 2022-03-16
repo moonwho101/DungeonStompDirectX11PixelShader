@@ -2,6 +2,9 @@
 
 ![Dungeon Stomp](../main/Textures/screenshot.jpg)
 
+## Newer Versions
+* Dungeon Stomp for DirectX12 is here https://github.com/moonwho101/DungeonStompDirectX12
+
 Dungeon Stomp DirectX11 with Vertex and Pixel shaders (blinn-phong).
 
 * Dungeon Stomp is a DirectX11 3D dungeon game that uses Direct3D, DirectInput and XAudio2.
