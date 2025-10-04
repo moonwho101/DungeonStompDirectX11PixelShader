@@ -13,6 +13,7 @@ Dungeon Stomp DirectX11 with Vertex and Pixel shaders (blinn-phong).
 * Lighting uses blinn-phong pixel shaders with help from Frank Luna's DirectX12 book.
 * Used the DirectX11 SimpleSample to demonstrate switching between Directx9.0c and Directx11 in the same application.
 * XBOX game controller is supported.
+* Run DungeonStomp.exe from the bin directory to try the game.
 
 It will compile using Microsoft Visual Studio 2019 community edition.
 
